@@ -1,7 +1,7 @@
 <template>
   <div class="lowerProxy">
     <mt-header class="lowerProxyHead" title="下级代理">
-      <router-link to="/" slot="left">
+      <router-link to="/main" slot="left">
         <mt-button icon="back"></mt-button>
       </router-link>
     </mt-header>

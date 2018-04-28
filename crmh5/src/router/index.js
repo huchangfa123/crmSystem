@@ -16,13 +16,19 @@ import onlineOrderPage from '../views/orderBlock/onlineOrderPage'
 import myGoodsPage from '../views/goodsBlock/myGoodsPage'
 import profitPage from '../views/goodsBlock/profitPage'
 import messagePage from '../views/messagePage'
+import registerPage from '../views/auth/registerPage'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
     {
-      path: '/',
+      path: '/register',
+      name: 'registerPage',
+      component: registerPage
+    },
+    {
+      path: '/main',
       name: 'MainPage',
       component: MainPage
     },

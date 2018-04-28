@@ -1,7 +1,7 @@
 <template>
   <div class="profit">
     <mt-header class="profitHead" title="差价利润">
-      <router-link to="/" slot="left">
+      <router-link to="/main" slot="left">
         <mt-button icon="back"></mt-button>
       </router-link>
     </mt-header>

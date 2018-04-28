@@ -1,7 +1,7 @@
 <template>
   <div class="proxyReview">
     <mt-header class="proxyReviewHead" title="代理审核">
-      <router-link to="/" slot="left">
+      <router-link to="/main" slot="left">
         <mt-button icon="back"></mt-button>
       </router-link>
     </mt-header>

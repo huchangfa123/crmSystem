@@ -1,7 +1,7 @@
 <template>
   <div class="address">
     <mt-header class="addressHead" title="收货地址">
-      <router-link to="/" slot="left">
+      <router-link to="/main" slot="left">
         <mt-button icon="back"></mt-button>
       </router-link>
     </mt-header>

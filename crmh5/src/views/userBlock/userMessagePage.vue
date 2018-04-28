@@ -1,7 +1,7 @@
 <template>
   <div class="userMessage">
     <mt-header class="useMsgHead" title="用户信息">
-      <router-link to="/" slot="left">
+      <router-link to="/main" slot="left">
         <mt-button icon="back"></mt-button>
       </router-link>
     </mt-header>
