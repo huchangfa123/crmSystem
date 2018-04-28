@@ -22,7 +22,7 @@ export default {
     flex-direction: row;
     height: 200px;
     width: 100%;
-    background-color: #000;
+    background-color: #665b5b;
     .userPic {
       border-radius: 50%;
       height: 70px;

@@ -19,6 +19,24 @@ function getTime (val) {
   return currentdate
 }
 
+function checkPhone (val) {
+  let reg = /^1[3|4|5|7|8][0-9]{9}$/
+  return reg.test(parseInt(val))
+}
+
+function checkName (val) {
+  let reg = /^[\u4e00-\u9fa5]{2,4}$/
+  return reg.test(val)
+}
+
+function checkidCard (val) {
+  let reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/
+  return reg.test(val)
+}
+
 module.exports = {
-  getTime
+  getTime,
+  checkPhone,
+  checkName,
+  checkidCard
 }

@@ -2,13 +2,19 @@
   <div class='login'>
     <h2>登录</h2>
     <mt-field class="logininput-box" placeholder="手机号"></mt-field>
-    <mt-field class="logininput-box" placeholder="验证码">
+    <mt-field v-if="!usePassword" class="logininput-box" placeholder="验证码">
       <mt-button @click="getIdentifyCode" type="primary" :disabled=closeBtn>
         获取
         <span v-if="closeBtn">({{rTime}}s)</span>
       </mt-button>
     </mt-field>
-    <mt-button class="login-btn" type="primary">登录</mt-button>
+    <mt-field v-if="usePassword" class="logininput-box" placeholder="密码"></mt-field>
+    <mt-button @click="login" class="login-btn" type="primary">登录</mt-button>
+    <div class='bottom'>
+      <span v-if="!usePassword" @click="setUsePassword">密码登录</span>
+      <span v-if="usePassword" @click="setUseIdentityCode">验证码登录</span>
+      <span @click="goToRegister">注册帐号</span>
+    </div>
   </div>
 </template>
 <script>
@@ -16,7 +22,8 @@ export default {
   data () {
     return {
       closeBtn: false,
-      rTime: 5
+      rTime: 5,
+      usePassword: false
     }
   },
   methods: {
@@ -32,6 +39,18 @@ export default {
     getIdentifyCode () {
       this.closeBtn = true
       this.Timer()
+    },
+    login () {
+      this.$router.push('/main')
+    },
+    setUsePassword () {
+      this.usePassword = true
+    },
+    setUseIdentityCode () {
+      this.usePassword = false
+    },
+    goToRegister () {
+      this.$router.push('/register')
     }
   }
 }
@@ -56,6 +75,22 @@ export default {
     .login-btn {
       width: 90%;
       margin-top: 10px;
+    }
+    .bottom {
+      display: flex;
+      span {
+        color: white;
+        margin-top: 10px;
+        cursor: pointer;
+      }
+      span:nth-child(1) {
+        position: absolute;
+        left: 20px;
+      }
+      span:nth-child(2) {
+        position: absolute;
+        right: 20px;
+      }
     }
   }
 </style>
