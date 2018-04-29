@@ -1,28 +1,68 @@
 <template>
   <div class='register'>
     <h2>注册</h2>
-    <mt-field class="rsinput-box" type="tel" placeholder="手机号"></mt-field>
+    <mt-field class="rsinput-box" placeholder="手机号" type="tel" v-model="phone"></mt-field>
+    <mt-field class="rsinput-box" placeholder="密码" type="password" style="border-bottom: 1px solid rgb(139, 196, 240)" v-model="password"></mt-field>
+    <mt-field class="rsinput-box" placeholder="真实姓名" v-model="name"></mt-field>
+    <mt-field class="rsinput-box" placeholder="身份证" v-model="idCard"></mt-field>
+    <mt-field class="rsinput-box" placeholder="推荐人id" v-model="recommendId"></mt-field>
     <mt-field class="rsinput-box" placeholder="验证码">
       <mt-button @click="getIdentifyCode" type="primary" :disabled=closeBtn>
         获取
         <span v-if="closeBtn">({{rTime}}s)</span>
       </mt-button>
     </mt-field>
-    <mt-button @click="goToConfig" class="register-btn" type="primary">注册</mt-button>
+    <mt-button @click="goToMain" class="register-btn" type="primary">注册</mt-button>
     <div class='bottom'>
       <span @click="goToLogin">直接登录</span>
     </div>
   </div>
 </template>
 <script>
+import { checkPhone, checkName, checkidCard } from '../../utils/format'
+import { Toast } from 'mint-ui'
+import { mapActions } from 'vuex'
+
 export default {
   data () {
     return {
       closeBtn: false,
-      rTime: 5
+      rTime: 5,
+      phone: '',
+      password: '',
+      name: '',
+      idCard: '',
+      recommendId: ''
     }
   },
   methods: {
+    ...mapActions(['register', 'login']),
+    checkData () {
+      if (!(this.phone && this.password && this.name && this.idCard)) {
+        return Toast({
+          message: '信息不能为空'
+        })
+      }
+      if (checkPhone(this.phone)) {
+        if (checkName(this.name)) {
+          if (checkidCard(this.idCard)) {
+            return 'success'
+          } else {
+            return Toast({
+              message: '身份证有误'
+            })
+          }
+        } else {
+          return Toast({
+            message: '名字有误'
+          })
+        }
+      } else {
+        Toast({
+          message: '手机号错误'
+        })
+      }
+    },
     Timer () {
       if (this.rTime > 0) {
         this.rTime--
@@ -36,8 +76,34 @@ export default {
       this.closeBtn = true
       this.Timer()
     },
-    goToConfig () {
-      this.$router.push('/config')
+    async goToMain () {
+      if (this.checkData() !== 'success') {
+        return
+      }
+      let result = await this.register({
+        phoneNumber: this.phone,
+        password: this.password,
+        realName: this.name,
+        idCard: this.idCard
+      })
+      if (result.data.code === 200) {
+        let login = await this.login({
+          phoneNumber: this.phone,
+          password: this.password,
+          target: 1
+        })
+        if (login.data.code === 200) {
+          this.$router.push('/main')
+        } else {
+          Toast({
+            message: login.data.error
+          })
+        }
+      } else {
+        Toast({
+          message: result.data.error
+        })
+      }
     },
     goToLogin () {
       this.$router.push('/login')

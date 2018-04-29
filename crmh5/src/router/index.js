@@ -18,7 +18,6 @@ import profitPage from '../views/goodsBlock/profitPage'
 import messagePage from '../views/messagePage'
 import registerPage from '../views/auth/registerPage'
 import loginPage from '../views/auth/loginPage'
-import configPage from '../views/auth/configPage'
 
 Vue.use(Router)
 
@@ -28,11 +27,6 @@ export default new Router({
       path: '/register',
       name: 'registerPage',
       component: registerPage
-    },
-    {
-      path: '/config',
-      name: 'configPage',
-      component: configPage
     },
     {
       path: '/login',
