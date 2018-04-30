@@ -2,7 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import MainPage from '../views/mainPage'
 import userMessagePage from '../views/userBlock/userMessagePage'
-import addressPage from '../views/userBlock/addressPage'
+import addAddressPage from '../views/userBlock/addAddressPage'
+import managerAddressPage from '../views/userBlock/managerAddressPage'
 import credentialsPage from '../views/userBlock/credentialsPage'
 import lowerProxyPage from '../views/proxyBlock/lowerProxyPage'
 import proxyStructurePage from '../views/proxyBlock/proxyStructurePage'
@@ -44,9 +45,14 @@ export default new Router({
       component: userMessagePage
     },
     {
-      path: '/address',
-      name: 'addressPage',
-      component: addressPage
+      path: '/addAddress',
+      name: 'addAddressPage',
+      component: addAddressPage
+    },
+    {
+      path: '/managerAddress',
+      name: 'managerAddressPage',
+      component: managerAddressPage
     },
     {
       path: '/credentials',

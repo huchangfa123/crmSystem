@@ -11,24 +11,36 @@
       </mt-palette-button>
     </div>
     <mt-field label="用户名" placeholder="请输入用户名" v-model="userName"></mt-field>
-    <mt-field label="邮箱" placeholder="请输入邮箱" type="email" v-model="email"></mt-field>
+    <mt-field label="等级" disabled v-model="level"></mt-field>
     <mt-field label="手机号" placeholder="请输入手机号" type="email" v-model="num"></mt-field>
     <mt-field label="用户上级" type="text" disabled v-model="boss"></mt-field>
+    <mt-field label="身份证" type="text" disabled v-model="idCard"></mt-field>
     <div class="bottom">
       <mt-button class="button" type="primary">保存修改</mt-button>
     </div>
   </div>
 </template>
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'userMessagePage',
+  computed: {
+    ...mapGetters(['userData'])
+  },
   data () {
     return {
-      userName: '呜呜开',
-      email: 'asdsad',
-      num: '13546545454',
-      boss: '开挂团队'
+      userName: '',
+      num: '',
+      boss: '开挂团队',
+      level: '',
+      idCard: ''
     }
+  },
+  created () {
+    this.userName = this.userData.realName
+    this.num = this.userData.phoneNumber
+    this.idCard = this.userData.idCard
+    this.level = this.userData.agent
   }
 }
 </script>

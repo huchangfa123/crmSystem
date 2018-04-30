@@ -21,6 +21,9 @@ export default {
     this.deactivated()
     next()
   },
+  async created () {
+    await this.getUserData()
+  },
   mounted () {
     this.activated()
   },
@@ -28,7 +31,7 @@ export default {
     ...mapGetters(['mainPageTop'])
   },
   methods: {
-    ...mapActions(['setMainPageTop']),
+    ...mapActions(['setMainPageTop', 'getUserData']),
     recordScrollPosition (e) {
       this.setMainPageTop({mainPageTop: e.target.scrollTop})
     },

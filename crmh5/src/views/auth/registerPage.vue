@@ -38,7 +38,7 @@ export default {
   methods: {
     ...mapActions(['register', 'login']),
     checkData () {
-      if (!(this.phone && this.password && this.name && this.idCard)) {
+      if (!(this.phone && this.password && this.name && this.idCard && this.recommendId)) {
         return Toast({
           message: '信息不能为空'
         })
@@ -84,7 +84,8 @@ export default {
         phoneNumber: this.phone,
         password: this.password,
         realName: this.name,
-        idCard: this.idCard
+        idCard: this.idCard,
+        recommendId: this.recommendId
       })
       if (result.data.code === 200) {
         let login = await this.login({

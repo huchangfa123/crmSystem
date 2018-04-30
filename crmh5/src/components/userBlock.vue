@@ -23,13 +23,23 @@
   </div>
 </template>
 <script>
+import { mapActions } from 'vuex'
+import { Toast } from 'mint-ui'
 export default {
   methods: {
-    goToUserMessagePage () {
-      this.$router.replace({path: '/userMessage'})
+    ...mapActions(['getUserData']),
+    async goToUserMessagePage () {
+      let result = await this.getUserData()
+      if (result.data.code === 200) {
+        this.$router.replace({path: '/userMessage'})
+      } else {
+        return Toast({
+          message: result.error
+        })
+      }
     },
     goToAddressPage () {
-      this.$router.replace({path: '/address'})
+      this.$router.replace({path: '/managerAddress'})
     },
     goToCredentialsPage () {
       this.$router.replace({path: '/credentials'})

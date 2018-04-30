@@ -1,7 +1,7 @@
 <template>
-  <div class="address">
-    <mt-header class="addressHead" title="收货地址">
-      <router-link to="/main" slot="left">
+  <div class="addAddress">
+    <mt-header class="addAddressHead" title="收货地址">
+      <router-link to="/managerAddress" slot="left">
         <mt-button icon="back"></mt-button>
       </router-link>
     </mt-header>
@@ -10,13 +10,13 @@
     <mt-field label="手机" placeholder="手机" type="phone" v-model="phone"></mt-field>
     <mt-field label="收货地址" placeholder="收货地址" type="textarea" rows="4" v-model="address"></mt-field>
     <div class="bottom">
-      <mt-button class="button" type="primary">保存修改</mt-button>
+      <mt-button class="button" type="primary">确定</mt-button>
     </div>
   </div>
 </template>
 <script>
 export default {
-  name: 'addressPage',
+  name: 'addAddressPage',
   data () {
     return {
       address: '关州市白云区萨达十大',
@@ -28,10 +28,10 @@ export default {
 }
 </script>
 <style lang="scss">
-.address {
+.addAddress {
   display: flex;
   flex-direction: column;
-  .addressHead{
+  .addAddressHead{
     background-color: green;
     height: 60px;
     font-size: 18px;

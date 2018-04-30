@@ -19,7 +19,7 @@
 </template>
 <script>
 import { Toast } from 'mint-ui'
-import { checkPhone } from '../../utils/format'
+// import { checkPhone } from '../../utils/format'
 import { mapActions } from 'vuex'
 export default {
   data () {
@@ -58,13 +58,14 @@ export default {
           message: '请输入验证码'
         })
       }
-      if (checkPhone(this.phone)) {
-        return 'success'
-      } else {
-        return Toast({
-          message: '手机号有误'
-        })
-      }
+      return 'success'
+      // if (checkPhone(this.phone)) {
+      //   return 'success'
+      // } else {
+      //   return Toast({
+      //     message: '手机号有误'
+      //   })
+      // }
     },
     async goToMain () {
       let check = this.checkData()
