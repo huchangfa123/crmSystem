@@ -1,6 +1,6 @@
 <template>
   <div class="address-item">
-    <div class="item-content">
+    <div class="item-content" @click="showPopup">
       <span>{{address}}</span>
       <span>邮编:{{postalCode}}</span>
       <span class="bottom-font">
@@ -13,9 +13,22 @@
         <div :class="style"></div>
       </div>
     </div>
+    <mt-popup
+      class="bottom"
+      v-model="popupVisible"
+      position="bottom">
+      <div @click="goToEditPage">
+        <mt-cell title="修改"></mt-cell>
+      </div>
+      <div @click="deleteAddress">
+        <mt-cell title="删除"></mt-cell>
+      </div>
+    </mt-popup>
   </div>
 </template>
 <script>
+import { mapActions } from 'vuex'
+import { Toast } from 'mint-ui'
 export default {
   props: {
     recivePeople: {
@@ -56,10 +69,12 @@ export default {
   },
   data () {
     return {
-      style: ''
+      style: '',
+      popupVisible: false
     }
   },
   methods: {
+    ...mapActions(['delAddress']),
     setActive () {
       if (!this.style) {
         this.style = 'active'
@@ -71,6 +86,25 @@ export default {
     },
     setDefault () {
       this.style = ''
+    },
+    showPopup () {
+      this.popupVisible = true
+    },
+    async deleteAddress () {
+      let result = await this.delAddress({id: this.id})
+      if (result.code === 200) {
+        this.popupVisible = false
+        Toast({
+          message: '删除成功'
+        })
+      } else {
+        Toast({
+          message: '删除失败'
+        })
+      }
+    },
+    goToEditPage () {
+      this.$router.push({path: '/addAddress', query: {edit: true, id: this.id}})
     }
   }
 }
@@ -116,6 +150,15 @@ export default {
       div {
         width: 10px;
         height: 10px;
+      }
+    }
+  }
+  .bottom {
+    width: 100%;
+    .mint-cell {
+      text-align: center;
+      .mint-cell-text {
+        color: black;
       }
     }
   }

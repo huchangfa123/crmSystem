@@ -6,12 +6,12 @@
       </router-link>
       <mt-button @click="goToAddarress" class="btn-add" slot="right">+</mt-button>
     </mt-header>
-    <addressItem v-for='item in items'
+    <addressItem v-for='item in this.addressList'
       :key='item.id'
-      :recivePeople="item.recivePeople"
+      :recivePeople="item.receivePeople"
       :address="item.address"
       :postalCode="item.postalCode"
-      :phoneNumber="item.phoneNumber"
+      :phoneNumber="item.receivePhone"
       :id="item.id"
       :ref="item.id"
       v-on:getStyle="setOtherClose"
@@ -21,36 +21,29 @@
 </template>
 <script>
 import addressItem from '../../components/addressItem'
+import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'addressPage',
   components: {
     addressItem
   },
+  computed: {
+    ...mapGetters(['addressList'])
+  },
   data () {
     return {
-      selected: '',
-      items: [
-        {
-          id: 'child1',
-          address: 'asdasdasdasd',
-          recivePeople: 'asdasda',
-          postalCode: '123123',
-          phoneNumber: '123123123'
-        },
-        {
-          id: 'child2',
-          address: 'asdasdasdasd',
-          recivePeople: 'asdasda',
-          postalCode: '123123',
-          phoneNumber: '123123123'
-        }
-      ]
+      selected: ''
     }
   },
+  async created () {
+    await this.getAddressList()
+  },
   methods: {
+    ...mapActions(['getAddressList']),
     setOtherClose (data) {
       if (data.style) {
-        for (let item of this.items) {
+        console.log(data)
+        for (let item of this.addressList) {
           if (data.id !== item.id) {
             this.$refs[item.id][0].setDefault()
           }

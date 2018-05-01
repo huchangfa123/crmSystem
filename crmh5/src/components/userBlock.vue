@@ -30,7 +30,7 @@ export default {
     ...mapActions(['getUserData']),
     async goToUserMessagePage () {
       let result = await this.getUserData()
-      if (result.data.code === 200) {
+      if (result.code === 200) {
         this.$router.replace({path: '/userMessage'})
       } else {
         return Toast({

@@ -1,19 +1,45 @@
 import api from '../../api/normal'
 const state = {
-  userData: {}
+  userData: {},
+  addressList: []
 }
 
 const getters = {
-  userData: state => state.userData
+  userData: state => state.userData,
+  addressList: state => state.addressList
 }
 
 const actions = {
   async getUserData ({commit}, data) {
     let result = await api.getUserData()
-    console.log('result', result)
-    if (result.data.code === 200) {
-      commit('initUserData', result.data.data)
+    if (result.code === 200) {
+      commit('initUserData', result.data)
     }
+    return result
+  },
+
+  async getAddressList ({commit}, data) {
+    let result = await api.getAddressList()
+    if (result.code === 200) {
+      commit('initAddressList', result.data)
+    }
+  },
+
+  async addAddress ({commit}, data) {
+    let result = await api.addAddress(data)
+    return result
+  },
+
+  async delAddress ({commit}, data) {
+    let result = await api.delAddress(data)
+    if (result.code === 200) {
+      commit('delAddress', data)
+    }
+    return result
+  },
+
+  async editAddress ({commit}, data) {
+    let result = await api.editAddress(data)
     return result
   }
 }
@@ -21,6 +47,20 @@ const actions = {
 const mutations = {
   initUserData (state, data) {
     state.userData = data
+  },
+  initAddressList (state, data) {
+    state.addressList = data
+  },
+  delAddress (state, data) {
+    let index = 0
+    for (let item of state.addressList) {
+      if (item.id === data.id) {
+        state.addressList.splice(index, 1)
+        return
+      } else {
+        index++
+      }
+    }
   }
 }
 
