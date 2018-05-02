@@ -33,6 +33,7 @@ export default {
     justify-content: space-between;
     align-items: center;
     padding-left: 15px;
+    width: 100%;
   }
   .avator{
     .wh(36px, 36px);

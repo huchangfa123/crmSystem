@@ -3,6 +3,8 @@
     <el-table
       :data="tableData"
       style="width: 500px"
+      class="user-table"
+      border
     >
       <el-table-column
         prop="name"
@@ -42,8 +44,11 @@ export default {
   .contain {
     width: 100%;
     height: 100%;
-    padding: 10px;
+    overflow: auto;
     display: flex;
     justify-content: center;
+    .user-table {
+      margin: 20px;
+    }
   }
 </style>

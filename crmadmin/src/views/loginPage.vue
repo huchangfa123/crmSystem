@@ -10,7 +10,7 @@
             <el-input v-model="loginForm.username" placeholder="用户名"><span>dsfsf</span></el-input>
           </el-form-item>
           <el-form-item prop="password">
-            <el-input type="password" placeholder="密码"></el-input>
+            <el-input v-model="loginForm.password" type="password" placeholder="密码"></el-input>
           </el-form-item>
           <el-form-item>
               <el-button @click="submitForm" type="primary" class="submit_btn">登陆</el-button>
@@ -21,6 +21,7 @@
     </div>
 </template>
 <script>
+import { mapActions } from 'vuex'
 export default {
   data () {
     return {
@@ -35,8 +36,16 @@ export default {
     }
   },
   methods: {
-    submitForm () {
-      this.$router.push('/main')
+    ...mapActions(['login']),
+    async submitForm () {
+      let result = await this.login({
+        phoneNumber: this.loginForm.username,
+        password: this.loginForm.password,
+        target: 2
+      })
+      if (result.data.code === 200) {
+        this.$router.push('/main')
+      }
     }
   }
 }

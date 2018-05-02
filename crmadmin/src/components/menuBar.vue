@@ -63,7 +63,7 @@ export default {
 }
 </script>
 <style lang='less'>
-  @import '../assets/mixin';
+  @import '../assets/common';
   .manage_page {
     width: 220px;
   }
