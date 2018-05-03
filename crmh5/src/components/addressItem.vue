@@ -65,12 +65,23 @@ export default {
       default () {
         return ''
       }
+    },
+    isDefault: {
+      type: Boolean,
+      required: true
     }
   },
   data () {
     return {
       style: '',
       popupVisible: false
+    }
+  },
+  created () {
+    if (this.isDefault) {
+      this.style = 'active'
+    } else {
+      this.style = ''
     }
   },
   methods: {

@@ -6,7 +6,7 @@
       </router-link>
       <mt-button @click="goToAddarress" class="btn-add" slot="right">+</mt-button>
     </mt-header>
-    <addressItem v-for='item in this.addressList'
+    <addressItem v-if="showList" v-for='item in this.addressList'
       :key='item.id'
       :recivePeople="item.receivePeople"
       :address="item.address"
@@ -14,6 +14,7 @@
       :phoneNumber="item.receivePhone"
       :id="item.id"
       :ref="item.id"
+      :isDefault="item.isDefault"
       v-on:getStyle="setOtherClose"
     >
     </addressItem>
@@ -32,17 +33,21 @@ export default {
   },
   data () {
     return {
-      selected: ''
+      selected: '',
+      showList: false
     }
   },
   async created () {
-    await this.getAddressList()
+    let result = await this.getAddressList()
+    if (result.code === 200) {
+      this.showList = true
+    }
   },
   methods: {
-    ...mapActions(['getAddressList']),
-    setOtherClose (data) {
+    ...mapActions(['getAddressList', 'setDefaultAddress']),
+    async setOtherClose (data) {
       if (data.style) {
-        console.log(data)
+        await this.setDefaultAddress({id: data.id})
         for (let item of this.addressList) {
           if (data.id !== item.id) {
             this.$refs[item.id][0].setDefault()

@@ -23,6 +23,7 @@ const actions = {
     if (result.code === 200) {
       commit('initAddressList', result.data)
     }
+    return result
   },
 
   async addAddress ({commit}, data) {
@@ -41,6 +42,11 @@ const actions = {
   async editAddress ({commit}, data) {
     let result = await api.editAddress(data)
     return result
+  },
+
+  async setDefaultAddress ({commit}, data) {
+    let result = await api.setDefaultAddress(data)
+    return result
   }
 }
 
@@ -50,6 +56,7 @@ const mutations = {
   },
   initAddressList (state, data) {
     state.addressList = data
+    console.log('curaddress', state.addressList)
   },
   delAddress (state, data) {
     let index = 0

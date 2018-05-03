@@ -22,7 +22,7 @@ import loginPage from '../views/auth/loginPage'
 
 Vue.use(Router)
 
-export default new Router({
+let router = new Router({
   routes: [
     {
       path: '/register',
@@ -122,3 +122,17 @@ export default new Router({
   ],
   mode: 'history'
 })
+
+router.beforeEach((to, from, next) => {
+  if (to.name !== 'loginPage' && to.name !== 'registerPage') {
+    if (sessionStorage.getItem('actoken')) {
+      next()
+    } else {
+      next('/login')
+    }
+  } else {
+    next()
+  }
+})
+
+export default router

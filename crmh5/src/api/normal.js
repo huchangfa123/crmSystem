@@ -48,11 +48,20 @@ async function editAddress (data, options = {}) {
   return result
 }
 
+/**
+ * 修改默认地址
+*/
+async function setDefaultAddress (data, options = {}) {
+  let result = await axios.put(`${config.apiUrl}/address/default/${data.id}`, options)
+  return result
+}
+
 export default {
   getUserData,
   getAddressList,
   setAuthorization,
   addAddress,
   delAddress,
-  editAddress
+  editAddress,
+  setDefaultAddress
 }
