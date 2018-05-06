@@ -65,6 +65,7 @@ export default {
 .address {
   display: flex;
   flex-direction: column;
+  overflow-y: scroll;
   .addressHead{
     background-color: green;
     height: 60px;

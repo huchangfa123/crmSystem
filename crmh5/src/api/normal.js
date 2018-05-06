@@ -56,6 +56,14 @@ async function setDefaultAddress (data, options = {}) {
   return result
 }
 
+/**
+ * 获取所有商品
+*/
+async function getGoodsList (data, options = {}) {
+  let result = await axios.get(`${config.apiUrl}/goods`, options)
+  return result
+}
+
 export default {
   getUserData,
   getAddressList,
@@ -63,5 +71,6 @@ export default {
   addAddress,
   delAddress,
   editAddress,
-  setDefaultAddress
+  setDefaultAddress,
+  getGoodsList
 }

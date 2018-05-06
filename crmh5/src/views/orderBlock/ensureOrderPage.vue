@@ -1,7 +1,7 @@
 <template>
-  <div class="onlineOrder">
-    <mt-header class="onlineOrderHead" title="在线下单">
-      <router-link to="/main" slot="left">
+  <div class="ensureOrder">
+    <mt-header class="ensureOrderHead" title="确定订单">
+      <router-link to="/onlineOrder" slot="left">
         <mt-button icon="back"></mt-button>
       </router-link>
     </mt-header>
@@ -25,21 +25,22 @@
         >
       </div>
     </div>
-    <div class="goods-list">
-      <div class="goods-item">
-        <div class="goods-pic">
-          <img src="http://oqzgtjqen.bkt.clouddn.com/1066973925.jpg">
+    <div class="order-list">
+      <div class="orderItem">
+        <div class="itemDes">
+          <h3>正新鸡排</h3>
+          <p>好吃就错吃点</p>
         </div>
-        <div class="goods-content" v-if="goodsList.length > 0">
-          <div class="goods-name"><h3>{{goodsList[0].name}}(￥{{goodsList[0].price}})</h3></div>
-          <div class="goods-bottom">
-            <div class="goods-des">{{goodsList[0].des}}</div>
-            <div class="goods-btn">
-              <mt-button @click="ensureCount(0)" type="primary">下单</mt-button>
-            </div>
-          </div>
+        <div class="itemPrice">
+          <p>x2</p>
+          <p>￥26</p>
         </div>
       </div>
+    </div>
+    <div class="order-pic">
+      <uploadFile
+        title='付款截图'
+      ></uploadFile>
     </div>
     <div class="bottom">
       <div class="bottom-pic">
@@ -50,70 +51,35 @@
         <h3 v-if="totalPrice!==0">￥{{totalPrice}}</h3>
       </div>
       <div class="bottom-btn">
-        提交订单
+        订单确定
       </div>
     </div>
   </div>
 </template>
 <script>
-import { mapActions, mapGetters } from 'vuex'
-import { MessageBox, Toast } from 'mint-ui'
+import uploadFile from '../../components/upload-file'
 export default {
-  name: 'onlineOrderPage',
-  computed: {
-    ...mapGetters(['goodsList', 'addressList'])
+  name: 'ensureOrderPage',
+  components: {
+    uploadFile
   },
   data () {
     return {
-      defaultAddress: {},
-      orderList: [],
-      totalPrice: 0,
-      count: 0
-    }
-  },
-  async created () {
-    let result = await this.getGoodsList()
-    if (result.data.code === 200) {
-      await this.getAddressList()
-      this.getDefaultAddress()
-    }
-  },
-  methods: {
-    ...mapActions(['getGoodsList', 'getAddressList']),
-    getDefaultAddress () {
-      for (let item of this.addressList) {
-        if (item.isDefault) {
-          this.defaultAddress = item
-          break
-        }
-      }
-    },
-    ensureCount (index) {
-      MessageBox.prompt('请输入购买数量').then(({ value, action }) => {
-        if (action === 'confirm') {
-          value = parseFloat(value)
-          if (typeof value === 'number' && value % 1 === 0 && value > 0) {
-            this.orderList.push(Object.assign(this.goodsList[index], {count: value}))
-            this.count += value
-            this.totalPrice = value * parseFloat(this.goodsList[index].price)
-          } else {
-            return Toast({
-              message: '输入信息有误'
-            })
-          }
-        }
-      })
+      defaultAddress: {receivePeople: '1', receivePhone: '1', address: '1'},
+      addressList: ['1'],
+      count: 5,
+      totalPrice: '123'
     }
   }
 }
 </script>
 <style lang="scss">
-.onlineOrder {
+.ensureOrder {
   display: flex;
   flex-direction: column;
   width: 100%;
   height: 100%;
-  .onlineOrderHead{
+  .ensureOrderHead{
     background-color: #378ade;
     height: 60px;
     font-size: 18px;
@@ -171,61 +137,44 @@ export default {
       align-items: center;
     }
   }
-  .goods-list {
+  .order-pic {
+    width: 100%;
+    height: 180px;
+    border-top: 1px solid #e3e3e3;
+  }
+  .order-list {
     flex: 1;
     overflow: auto;
     display: flex;
     flex-direction: column;
-    .goods-item {
+    .orderItem {
+      height: 50px;
+      min-height: 50px;
       width: 100%;
-      height: 120px;
-      min-height: 120px;
       display: flex;
       flex-direction: row;
-      border-top: 1px solid #e0e0e0;
-      border-bottom: 1px solid #e0e0e0;
-      .goods-pic {
-        width: 120px;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        img {
-          width: 100px;
-          height: auto;
-          border: 1px solid #e0e0e0;
+      border-bottom: 1px solid #e3e3e3;
+      .itemDes {
+        width: 30%;
+        padding: 5px 5px;
+        h3 {
+          font-size: 16px;
+        }
+        p {
+          font-size: 14px;
+          color: #7e7373
         }
       }
-      .goods-content {
+      .itemPrice {
         flex: 1;
         display: flex;
-        flex-direction: column;
-        .goods-name {
-          width: 100%;
-          padding-left: 10px;
-          padding-top: 10px;
-          height: 20px;
-        }
-        .goods-bottom {
-          flex: 1;
-          display: flex;
-          flex-direction: row;
-          align-items: flex-end;
-          padding-bottom: 10px;
-          padding-left: 10px;
-          word-break: break-all;
-          .goods-des {
-            width: 70%;
-            color: #7e7373;
-          }
-          .goods-btn {
-            padding-right: 5px;
-            button {
-              font-size: 16px;
-              width: 100%;
-              height: 35px;
-            }
-          }
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: center;
+        padding-right: 20px;
+        p:nth-child(1) {
+          font-size: 14px;
+          padding-right: 20px;
         }
       }
     }

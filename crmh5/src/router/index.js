@@ -14,6 +14,7 @@ import cancelUpgradePage from '../views/proxyBlock/cancelUpgradePage'
 import myOrderPage from '../views/orderBlock/myOrderPage'
 import otherOrderPage from '../views/orderBlock/otherOrderPage'
 import onlineOrderPage from '../views/orderBlock/onlineOrderPage'
+import ensureOrderPage from '../views/orderBlock/ensureOrderPage'
 import myGoodsPage from '../views/goodsBlock/myGoodsPage'
 import profitPage from '../views/goodsBlock/profitPage'
 import messagePage from '../views/messagePage'
@@ -105,6 +106,11 @@ let router = new Router({
       component: onlineOrderPage
     },
     {
+      path: '/ensureOrder',
+      name: 'ensureOrderPage',
+      component: ensureOrderPage
+    },
+    {
       path: '/myGoods',
       name: 'myGoodsPage',
       component: myGoodsPage
@@ -123,16 +129,16 @@ let router = new Router({
   mode: 'history'
 })
 
-router.beforeEach((to, from, next) => {
-  if (to.name !== 'loginPage' && to.name !== 'registerPage') {
-    if (sessionStorage.getItem('actoken')) {
-      next()
-    } else {
-      next('/login')
-    }
-  } else {
-    next()
-  }
-})
+// router.beforeEach((to, from, next) => {
+//   if (to.name !== 'loginPage' && to.name !== 'registerPage') {
+//     if (sessionStorage.getItem('actoken')) {
+//       next()
+//     } else {
+//       next('/login')
+//     }
+//   } else {
+//     next()
+//   }
+// })
 
 export default router
