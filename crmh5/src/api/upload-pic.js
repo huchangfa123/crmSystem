@@ -1,13 +1,15 @@
 import axios from 'axios'
 
-function uploadPic (data) {
+async function uploadPic (data) {
   let options = {
-    headers: {'Content-Type': 'multipart/form-data'}
+    headers: {
+      'Content-Type': 'application/octet-stream',
+      'Authorization': `UpToken ${data.upload_token}`
+    }
   }
-  let result = axios.post('http://upload-z2.qiniup.com', data, options)
+  console.log(data.upload_token)
+  let result = await axios.post('https://upload-z2.qiniup.com/putb64/232123', data.file, options)
   return result
 }
 
-export default {
-  uploadPic
-}
+export default uploadPic

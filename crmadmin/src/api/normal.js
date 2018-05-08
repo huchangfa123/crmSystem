@@ -40,10 +40,20 @@ async function editGoods (data, options = {}) {
   return result
 }
 
+/**
+ * 获取用户列表
+*/
+async function getUserList (data, options = {}) {
+  console.log(data)
+  let result = await axios.post(`${config.apiUrl}/user/list`, data, options)
+  return result
+}
+
 export default {
   setAuthorization,
   addGoods,
   getGoodsList,
   delGoods,
-  editGoods
+  editGoods,
+  getUserList
 }

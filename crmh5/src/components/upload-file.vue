@@ -13,6 +13,8 @@
 </template>
 <script>
 import Exif from 'exif-js'
+import api from '../api/normal'
+import uploadPic from '../api/upload-pic'
 export default {
   props: {
     picStyle: {
@@ -85,9 +87,14 @@ export default {
         }
       }
     },
-    postImg () {
+    async postImg () {
       // 这里写接口
-      console.log(this.headerImage)
+      let result = await api.getUploadToken()
+      let uploadResult = await uploadPic({
+        file: this.headerImage,
+        upload_token: result.data.uploadToken
+      })
+      console.log(uploadResult)
     },
     rotateImg (img, direction, canvas) {
       // 最小与最大旋转方向，图片旋转4次后回到原方向

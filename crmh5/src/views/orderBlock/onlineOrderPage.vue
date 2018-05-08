@@ -109,7 +109,7 @@ export default {
             let hasOrder = false
             for (let order of this.orderList) {
               if (order.id.toString() === this.goodsList[index].id.toString()) {
-                this.num = this.num - order.num + value
+                this.count = this.count - order.num + value
                 this.totalPrice = this.totalPrice - order.num * parseFloat(order.price).toFixed(2) + value * parseFloat(order.price).toFixed(2)
                 order.num = value
                 hasOrder = true

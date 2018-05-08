@@ -64,6 +64,14 @@ async function getGoodsList (data, options = {}) {
   return result
 }
 
+/**
+ * 获取上传图片token
+*/
+async function getUploadToken (data, options = {}) {
+  let result = await axios.get(`${config.apiUrl}/uploadToken`, options)
+  return result
+}
+
 export default {
   getUserData,
   getAddressList,
@@ -72,5 +80,6 @@ export default {
   delAddress,
   editAddress,
   setDefaultAddress,
-  getGoodsList
+  getGoodsList,
+  getUploadToken
 }
