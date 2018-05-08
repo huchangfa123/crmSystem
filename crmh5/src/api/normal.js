@@ -67,8 +67,13 @@ async function getGoodsList (data, options = {}) {
 /**
  * 获取上传图片token
 */
-async function getUploadToken (data, options = {}) {
-  let result = await axios.get(`${config.apiUrl}/uploadToken`, options)
+async function UploadPic (data, options = {}) {
+  options = {
+    headers: {
+      'Content-Type': 'form-data'
+    }
+  }
+  let result = await axios.post(`${config.apiUrl}/upload`, options)
   return result
 }
 
@@ -81,5 +86,5 @@ export default {
   editAddress,
   setDefaultAddress,
   getGoodsList,
-  getUploadToken
+  UploadPic
 }

@@ -13,8 +13,7 @@
 </template>
 <script>
 import Exif from 'exif-js'
-import api from '../api/normal'
-import uploadPic from '../api/upload-pic'
+import { mapActions } from 'vuex'
 export default {
   props: {
     picStyle: {
@@ -42,6 +41,7 @@ export default {
     this.defaultStyle = this.defaultStyle + ' ' + this.picStyle
   },
   methods: {
+    ...mapActions(['uploadPayPic']),
     deletePic () {
       this.picValue = ''
       this.headerImage = ''
@@ -89,12 +89,6 @@ export default {
     },
     async postImg () {
       // 这里写接口
-      let result = await api.getUploadToken()
-      let uploadResult = await uploadPic({
-        file: this.headerImage,
-        upload_token: result.data.uploadToken
-      })
-      console.log(uploadResult)
     },
     rotateImg (img, direction, canvas) {
       // 最小与最大旋转方向，图片旋转4次后回到原方向

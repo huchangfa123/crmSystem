@@ -49,11 +49,20 @@ async function getUserList (data, options = {}) {
   return result
 }
 
+/**
+ * 提交公告
+*/
+async function submitAnnouncement (data, options = {}) {
+  let result = await axios.post(`${config.apiUrl}/announcement`, data, options)
+  return result
+}
+
 export default {
   setAuthorization,
   addGoods,
   getGoodsList,
   delGoods,
   editGoods,
-  getUserList
+  getUserList,
+  submitAnnouncement
 }

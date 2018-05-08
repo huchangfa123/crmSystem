@@ -34,9 +34,19 @@ function checkidCard (val) {
   return reg.test(val)
 }
 
+function convertBase64UrlToBlob (urlData) {
+  var bytes = window.atob(urlData.split(',')[1])
+  var ab = new ArrayBuffer(bytes.length)
+  var ia = new Uint8Array(ab)
+  for (var i = 0; i < bytes.length; i++) {
+    ia[i] = bytes.charCodeAt(i)
+  }
+  return new Blob([ab], { type: 'image/png' })
+}
 module.exports = {
   getTime,
   checkPhone,
   checkName,
-  checkidCard
+  checkidCard,
+  convertBase64UrlToBlob
 }

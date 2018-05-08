@@ -1,5 +1,4 @@
 import api from '../../api/normal'
-import upload from '../../api/upload-pic'
 const state = {
   goodsList: [],
   curOrderData: {}
@@ -22,7 +21,7 @@ const actions = {
     commit('setCurOrderData', data)
   },
   async uploadPayPic ({commit}, data) {
-    let result = await upload.uploadPic(data)
+    let result = await api.UploadPic(data)
     return result
   }
 }
