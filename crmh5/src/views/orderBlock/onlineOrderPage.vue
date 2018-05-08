@@ -5,7 +5,7 @@
         <mt-button icon="back"></mt-button>
       </router-link>
     </mt-header>
-    <div class="goods-address">
+    <div class="goods-address" @click="goToSetAddress">
       <div class="address-left">
         <i class="iconfont">&#xe60a;</i>
       </div>
@@ -26,22 +26,22 @@
       </div>
     </div>
     <div class="goods-list">
-      <div class="goods-item">
+      <div class="goods-item" v-for="(item, index) in this.goodsList" :key='index'>
         <div class="goods-pic">
-          <img src="http://oqzgtjqen.bkt.clouddn.com/1066973925.jpg">
+          <img :src='item.pictures[0]'>
         </div>
         <div class="goods-content" v-if="goodsList.length > 0">
-          <div class="goods-name"><h3>{{goodsList[0].name}}(￥{{goodsList[0].price}})</h3></div>
+          <div class="goods-name"><h3>{{item.name}}(￥{{item.price}})</h3></div>
           <div class="goods-bottom">
-            <div class="goods-des">{{goodsList[0].des}}</div>
+            <div class="goods-des">{{item.des}}</div>
             <div class="goods-btn">
-              <mt-button @click="ensureCount(0)" type="primary">下单</mt-button>
+              <mt-button @click="ensureCount(index)" type="primary">下单</mt-button>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="bottom">
+    <div @click="setFloatBottom" class="bottom">
       <div class="bottom-pic">
         <i class="iconfont whitefont">&#xe601;</i>
         <div v-if="count > 0" class="bottom-count">{{count}}</div>
@@ -49,8 +49,19 @@
       <div class="bottom-content">
         <h3 v-if="totalPrice!==0">￥{{totalPrice}}</h3>
       </div>
-      <div class="bottom-btn">
+      <div @click="goToEnsure" class="bottom-btn">
         提交订单
+      </div>
+    </div>
+    <div v-if="showFloatBottom" class="float-bottom">
+      <div class="float-bottom-item" v-for="(item, index) in orderList" :key='index'>
+        <h3>{{item.name}}</h3>
+        <span class="price">￥{{item.price * item.num}}</span>
+        <div class="end">
+          <div @click="reduceCount(index)" class="pic-btn">-</div>
+          <span>{{item.num}}</span>
+          <div @click="addCount(index)" class="pic-btn">+</div>
+        </div>
       </div>
     </div>
   </div>
@@ -68,18 +79,20 @@ export default {
       defaultAddress: {},
       orderList: [],
       totalPrice: 0,
-      count: 0
+      count: 0,
+      showFloatBottom: false
     }
   },
   async created () {
     let result = await this.getGoodsList()
+    console.log('result', result)
     if (result.data.code === 200) {
       await this.getAddressList()
       this.getDefaultAddress()
     }
   },
   methods: {
-    ...mapActions(['getGoodsList', 'getAddressList']),
+    ...mapActions(['getGoodsList', 'getAddressList', 'setCurOrderData']),
     getDefaultAddress () {
       for (let item of this.addressList) {
         if (item.isDefault) {
@@ -93,9 +106,21 @@ export default {
         if (action === 'confirm') {
           value = parseFloat(value)
           if (typeof value === 'number' && value % 1 === 0 && value > 0) {
-            this.orderList.push(Object.assign(this.goodsList[index], {count: value}))
-            this.count += value
-            this.totalPrice = value * parseFloat(this.goodsList[index].price)
+            let hasOrder = false
+            for (let order of this.orderList) {
+              if (order.id.toString() === this.goodsList[index].id.toString()) {
+                this.num = this.num - order.num + value
+                this.totalPrice = this.totalPrice - order.num * parseFloat(order.price).toFixed(2) + value * parseFloat(order.price).toFixed(2)
+                order.num = value
+                hasOrder = true
+                break
+              }
+            }
+            if (!hasOrder) {
+              this.orderList.push(Object.assign(this.goodsList[index], {num: value}))
+              this.count += value
+              this.totalPrice += value * parseFloat(this.goodsList[index].price).toFixed(2)
+            }
           } else {
             return Toast({
               message: '输入信息有误'
@@ -103,6 +128,45 @@ export default {
           }
         }
       })
+    },
+    goToEnsure () {
+      if (!this.defaultAddress.receivePeople) {
+        return Toast({
+          message: '请设置默认地址'
+        })
+      }
+      if (this.orderList.length === 0) {
+        return Toast({
+          message: '购物车为空'
+        })
+      }
+      this.setCurOrderData({
+        curAddress: this.defaultAddress,
+        orderList: this.orderList,
+        totalPrice: this.totalPrice,
+        count: this.count
+      })
+      this.$router.push('/ensureOrder')
+    },
+    goToSetAddress () {
+      this.$router.push('/managerAddress')
+    },
+    setFloatBottom () {
+      this.showFloatBottom = !this.showFloatBottom
+    },
+    reduceCount (index) {
+      this.orderList[index].num -= 1
+      this.count -= 1
+      this.totalPrice -= parseFloat(this.orderList[index].price).toFixed(2)
+      console.log(typeof this.totalPrice)
+      if (this.orderList[index].num === 0) {
+        this.orderList.splice(index, 1)
+      }
+    },
+    addCount (index) {
+      this.orderList[index].num += 1
+      this.count += 1
+      this.totalPrice = (parseFloat(this.totalPrice) + parseFloat(this.orderList[index].price)).toFixed(2)
     }
   }
 }
@@ -270,6 +334,56 @@ export default {
       display: flex;
       justify-content: center;
       align-items: center;
+    }
+  }
+  .float-bottom {
+    position: absolute;
+    height: auto;
+    max-height: 300px;
+    overflow: scroll;
+    display: flex;
+    flex-direction: column;
+    bottom: 50px;
+    width: 100%;
+    .float-bottom-item {
+      width: 100%;
+      min-height: 50px;
+      height: 50px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      border-top:1px solid #e3e3e3;
+      position: relative;
+      background-color: white;
+      h3 {
+        margin: 0 10px;
+      }
+      .price {
+        position: absolute;
+        right: 95px;
+        color: red;
+        font-size: 17px;
+      }
+      .end {
+        position: absolute;
+        width: 75px;
+        right: 10px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        .pic-btn {
+          border-radius: 50%;
+          height: 20px;
+          width: 20px;
+          line-height: 20px;
+          text-align: center;
+          background-color: #378ade;
+          color: white;
+          font-size: 16px;
+          margin: 5px;
+        }
+      }
     }
   }
 }

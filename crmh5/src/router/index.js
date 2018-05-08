@@ -129,16 +129,16 @@ let router = new Router({
   mode: 'history'
 })
 
-// router.beforeEach((to, from, next) => {
-//   if (to.name !== 'loginPage' && to.name !== 'registerPage') {
-//     if (sessionStorage.getItem('actoken')) {
-//       next()
-//     } else {
-//       next('/login')
-//     }
-//   } else {
-//     next()
-//   }
-// })
+router.beforeEach((to, from, next) => {
+  if (to.name !== 'loginPage' && to.name !== 'registerPage') {
+    if (sessionStorage.getItem('actoken')) {
+      next()
+    } else {
+      next('/login')
+    }
+  } else {
+    next()
+  }
+})
 
 export default router

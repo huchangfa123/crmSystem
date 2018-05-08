@@ -6,7 +6,8 @@ const state = {
 }
 
 const getters = {
-  goodsList: state => state.goodsList
+  goodsList: state => state.goodsList,
+  curOrderData: state => state.curOrderData
 }
 
 const actions = {
@@ -32,6 +33,7 @@ const mutations = {
   },
   setCurOrderData (state, data) {
     state.curOrderData = data
+    console.log('123', state.curOrderData)
   }
 }
 

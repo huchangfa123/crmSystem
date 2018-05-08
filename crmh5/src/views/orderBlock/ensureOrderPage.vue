@@ -9,31 +9,25 @@
       <div class="address-left">
         <i class="iconfont">&#xe60a;</i>
       </div>
-      <div v-if="addressList.length > 0" class="address-content">
+      <div class="address-content">
         <div class="content-header">
-          <h4>{{defaultAddress.receivePeople}}</h4>
-          <h4>{{defaultAddress.receivePhone}}</h4>
+          <h4>{{curOrderData.curAddress.receivePeople}}</h4>
+          <h4 class="phone">{{curOrderData.curAddress.receivePhone}}</h4>
         </div>
         <div class="content-address">
-          收货地址: {{defaultAddress.address}}
+          收货地址: {{curOrderData.curAddress.address}}
         </div>
-      </div>
-      <div v-if="addressList.length === 0" class="address-default">
-        <span>请添加地址</span>
-      </div>
-      <div class="address-right">
-        >
       </div>
     </div>
     <div class="order-list">
-      <div class="orderItem">
+      <div class="orderItem" v-for="(item, index) in curOrderData.orderList" :key='index'>
         <div class="itemDes">
-          <h3>正新鸡排</h3>
-          <p>好吃就错吃点</p>
+          <h3>{{item.name}}</h3>
+          <p>{{item.des}}</p>
         </div>
         <div class="itemPrice">
-          <p>x2</p>
-          <p>￥26</p>
+          <p>x{{item.num}}</p>
+          <p>￥{{item.num * item.price}}</p>
         </div>
       </div>
     </div>
@@ -45,10 +39,10 @@
     <div class="bottom">
       <div class="bottom-pic">
         <i class="iconfont whitefont">&#xe601;</i>
-        <div v-if="count > 0" class="bottom-count">{{count}}</div>
+        <div v-if="count > 0" class="bottom-count">{{curOrderData.count}}</div>
       </div>
       <div class="bottom-content">
-        <h3 v-if="totalPrice!==0">￥{{totalPrice}}</h3>
+        <h3 v-if="totalPrice!==0">￥{{curOrderData.totalPrice}}</h3>
       </div>
       <div class="bottom-btn">
         订单确定
@@ -58,10 +52,14 @@
 </template>
 <script>
 import uploadFile from '../../components/upload-file'
+import { mapGetters } from 'vuex'
 export default {
   name: 'ensureOrderPage',
   components: {
     uploadFile
+  },
+  computed: {
+    ...mapGetters(['curOrderData'])
   },
   data () {
     return {
@@ -70,6 +68,9 @@ export default {
       count: 5,
       totalPrice: '123'
     }
+  },
+  created () {
+    console.log('curOrderData', this.curOrderData)
   }
 }
 </script>
@@ -110,31 +111,15 @@ export default {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
+        .phone {
+          margin-right: 30px;
+        }
       }
       .content-address {
         padding: 10px;
         color: #7e7373;
         word-break: break-all;
       }
-    }
-    .address-default {
-      flex: 1;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      span {
-        color: #7e7373;
-      }
-    }
-    .address-right {
-      width: 40px;
-      height: 100%;
-      font-size: 20px;
-      color: #7e7373;
-      display: flex;
-      justify-content: center;
-      align-items: center;
     }
   }
   .order-pic {
