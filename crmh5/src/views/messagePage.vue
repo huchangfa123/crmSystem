@@ -47,6 +47,7 @@ export default {
   async created () {
     await this.getUnreadList()
     await this.getMessageList({page: 1, limit: 6})
+    await this.cleanMess()
     this.formatData()
   },
   methods: {

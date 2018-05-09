@@ -6,16 +6,17 @@
           <el-input v-model="configForm.realName" placeholder="真实姓名"></el-input>
         </el-form-item>
         <el-form-item label="等级">
-          <el-select v-model="configForm.region" placeholder="等级">
-            <el-option label="黄金" value="2"></el-option>
-            <el-option label="白金" value="3"></el-option>
+          <el-select v-model="configForm.level" placeholder="无限制">
+            <el-option label="黄金" value="6"></el-option>
+            <el-option label="白金" value="5"></el-option>
             <el-option label="钻石" value="4"></el-option>
-            <el-option label="执行董事" value="5"></el-option>
-            <el-option label="企业合伙人" value="6"></el-option>
+            <el-option label="执行董事" value="3"></el-option>
+            <el-option label="企业合伙人" value="2"></el-option>
+            <el-option label="无限制" value="-1"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary">查询</el-button>
+          <el-button type="primary" @click="search">查询</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -53,10 +54,12 @@
     <div class="user-bottom">
       <el-pagination
         @current-change="handleCurrentChange"
+        @prev-click="goPage(currentPage - 1)"
+        @next-click="goPage(currentPage + 1)"
         :current-page.sync="currentPage"
-        :page-size="10"
+        :page-size="7"
         layout="prev, pager, next, jumper"
-        :total="20">
+        :total="listCount">
       </el-pagination>
     </div>
   </div>
@@ -66,22 +69,16 @@ import { mapActions, mapGetters } from 'vuex'
 import moment from 'moment'
 export default {
   async created () {
-    await this.getUserList({
-      page: 1,
-      limit: 8,
-      conditions: {},
-      sort: {createAt: -1}
-    })
-    this.formatList()
+    await this.goPage(this.currentPage)
   },
   computed: {
-    ...mapGetters(['userList'])
+    ...mapGetters(['userList', 'listCount'])
   },
   data () {
     return {
       configForm: {
         realName: '',
-        region: ''
+        level: ''
       },
       currentPage: 1
     }
@@ -95,8 +92,41 @@ export default {
         item.createAt = moment(item.createAt).format('YYYY-MM-DD HH:mm')
       }
     },
-    handleCurrentChange () {
-      console.log('1')
+    async handleCurrentChange (val) {
+      await this.goPage(val)
+    },
+    async goPage (page) {
+      await this.getUserList({
+        page,
+        limit: 7,
+        conditions: {},
+        sort: {createAt: -1}
+      })
+      this.formatList()
+    },
+    async search () {
+      let conditions = {}
+      if (this.configForm.realName) {
+        conditions.realName = this.configForm.realName
+      }
+      if (this.configForm.level && this.configForm.level !== -1) {
+        conditions.level = parseInt(this.configForm.level)
+      }
+      let result = await this.getUserList({
+        page: 1,
+        limit: 7,
+        conditions,
+        sort: {createAt: -1}
+      })
+      if (result.data.code === 200) {
+        this.formatList()
+      } else {
+        return this.$message({
+          showClose: true,
+          message: '查询信息有误',
+          type: 'warning'
+        })
+      }
     }
   }
 }
