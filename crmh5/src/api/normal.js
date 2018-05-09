@@ -77,6 +77,30 @@ async function UploadPic (data, options = {}) {
   return result
 }
 
+/**
+ * 获取未读信息
+*/
+async function getUnreadList (data, options = {}) {
+  let result = await axios.get(`${config.apiUrl}/mess`, options)
+  return result
+}
+
+/**
+ * 获取所有信息
+*/
+async function getMessageList (data, options = {}) {
+  let result = await axios.post(`${config.apiUrl}/messAll`, data, options)
+  return result
+}
+
+/**
+ * 所有信息标记已读
+*/
+async function cleanMess (data, options = {}) {
+  let result = await axios.get(`${config.apiUrl}/messClean`, options)
+  return result
+}
+
 export default {
   getUserData,
   getAddressList,
@@ -86,5 +110,8 @@ export default {
   editAddress,
   setDefaultAddress,
   getGoodsList,
-  UploadPic
+  UploadPic,
+  getUnreadList,
+  getMessageList,
+  cleanMess
 }

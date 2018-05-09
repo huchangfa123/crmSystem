@@ -39,6 +39,8 @@ export default {
             message: this.ruleForm.content
           })
           if (result.data.code === 200) {
+            this.ruleForm.title = ''
+            this.ruleForm.content = ''
             return this.$message({
               showClose: true,
               message: '发布成功',
