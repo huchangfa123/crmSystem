@@ -20,18 +20,15 @@
         </div>
       </div>
       <div class="row">
-        <div @click="goToProxyReviewPage">
-          <i class="iconfont proxyfont">&#xe603;</i>
-          <span>代理审核</span>
-        </div>
         <div @click="goToLevelUpPage">
           <i class="iconfont proxyfont">&#xe600;</i>
           <span>等级提升</span>
         </div>
-        <div @click="goToCancelUpgradePage">
-          <i class="iconfont proxyfont">&#xe662;</i>
-          <span>申请取消</span>
+        <div @click="goToReviewProxyPage">
+          <i class="iconfont proxyfont">&#xe630;</i>
+          <span>下级升级情况</span>
         </div>
+        <div></div>
       </div>
     </div>
   </div>
@@ -45,17 +42,14 @@ export default {
     goToProxyStructurePage () {
       this.$router.replace({path: '/proxyStructure'})
     },
+    goToReviewProxyPage () {
+      this.$router.replace({path: '/reviewProxy'})
+    },
     goToMyRecommendPage () {
       this.$router.replace({path: '/myRecommend'})
     },
-    goToProxyReviewPage () {
-      this.$router.replace({path: '/proxyReview'})
-    },
     goToLevelUpPage () {
       this.$router.replace({path: '/levelUp'})
-    },
-    goToCancelUpgradePage () {
-      this.$router.replace({path: '/cancelUpgrade'})
     }
   }
 }

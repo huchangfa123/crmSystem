@@ -6,14 +6,11 @@
     </div>
     <div class="goods-choice-blank">
       <div class="row">
-        <div @click="goToMyGoodsPage">
-          <i class="iconfont goodsfont">&#xe634;</i>
-          <span>我的出货</span>
-        </div>
         <div @click="goToProfigPage">
           <i class="iconfont goodsfont">&#xe637;</i>
           <span>差价利润</span>
         </div>
+        <div></div>
         <div></div>
       </div>
     </div>
@@ -22,9 +19,6 @@
 <script>
 export default {
   methods: {
-    goToMyGoodsPage () {
-      this.$router.replace('/myGoods')
-    },
     goToProfigPage () {
       this.$router.replace('/profit')
     }

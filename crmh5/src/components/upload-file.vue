@@ -14,6 +14,7 @@
 <script>
 import Exif from 'exif-js'
 import { mapActions } from 'vuex'
+import api from '../api/normal'
 export default {
   props: {
     picStyle: {
@@ -46,6 +47,7 @@ export default {
       this.picValue = ''
       this.headerImage = ''
       this.defaultValue = this.title
+      this.$emit('curPicUrl', {imgUrl: ''})
     },
     upload (e) {
       let files = e.target.files || e.dataTransfer.files
@@ -89,6 +91,10 @@ export default {
     },
     async postImg () {
       // 这里写接口
+      let result = await api.UploadPic({
+        data: this.headerImage
+      })
+      this.$emit('curPicUrl', result.data)
     },
     rotateImg (img, direction, canvas) {
       // 最小与最大旋转方向，图片旋转4次后回到原方向

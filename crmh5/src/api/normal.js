@@ -68,12 +68,7 @@ async function getGoodsList (data, options = {}) {
  * 获取上传图片token
 */
 async function UploadPic (data, options = {}) {
-  options = {
-    headers: {
-      'Content-Type': 'form-data'
-    }
-  }
-  let result = await axios.post(`${config.apiUrl}/upload`, options)
+  let result = await axios.post(`${config.apiUrl}/upBase64`, data, options)
   return result
 }
 
@@ -101,6 +96,54 @@ async function cleanMess (data, options = {}) {
   return result
 }
 
+/**
+ * 生成订单
+*/
+async function createOrder (data, options = {}) {
+  let result = await axios.post(`${config.apiUrl}/order`, data, options)
+  return result
+}
+
+/**
+ * 查看我的下单
+*/
+async function getMyBuyOrder (data, options = {}) {
+  let result = await axios.post(`${config.apiUrl}/order/checkOrder`, data, options)
+  return result
+}
+
+/**
+ * 查看我的订单
+*/
+async function getMyOrder (data, options = {}) {
+  let result = await axios.post(`${config.apiUrl}/order/checkBill`, data, options)
+  return result
+}
+
+/**
+ * 修改订单状态
+*/
+async function updateOrderState (data, options = {}) {
+  let result = await axios.put(`${config.apiUrl}/order/${data.id}`, data, options)
+  return result
+}
+
+/**
+ * 查看我的推荐
+*/
+async function getMyRecommend (data, options = {}) {
+  let result = await axios.get(`${config.apiUrl}/recommend`, options)
+  return result
+}
+
+/**
+ * 查看我的下级
+*/
+async function getMyLowerLevel (data, options = {}) {
+  let result = await axios.get(`${config.apiUrl}/subUser/${data.id}`)
+  return result
+}
+
 export default {
   getUserData,
   getAddressList,
@@ -113,5 +156,11 @@ export default {
   UploadPic,
   getUnreadList,
   getMessageList,
-  cleanMess
+  cleanMess,
+  createOrder,
+  getMyBuyOrder,
+  getMyOrder,
+  getMyRecommend,
+  getMyLowerLevel,
+  updateOrderState
 }

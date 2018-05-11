@@ -90,9 +90,10 @@ export default {
       await this.getAddressList()
       this.getDefaultAddress()
     }
+    this.cleanCurOrderData()
   },
   methods: {
-    ...mapActions(['getGoodsList', 'getAddressList', 'setCurOrderData']),
+    ...mapActions(['getGoodsList', 'getAddressList', 'setCurOrderData', 'cleanCurOrderData']),
     getDefaultAddress () {
       for (let item of this.addressList) {
         if (item.isDefault) {

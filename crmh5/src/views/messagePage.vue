@@ -11,21 +11,25 @@
     </mt-navbar>
     <mt-tab-container v-model="selected">
       <mt-tab-container-item class="message-body" id="1">
-        <div class="message-item" v-for="(item, index) in unreadList" :key="index">
-          <div class="message-header">
-            <h3>{{item.title}}</h3>
-            <span>{{item.createAt}}</span>
+        <div class="item-body">
+          <div class="message-item" v-for="(item, index) in unreadList" :key="index">
+            <div class="message-header">
+              <h3>{{item.title}}</h3>
+              <span>{{item.createAt}}</span>
+            </div>
+            <div class="message-content">{{item.message}}</div>
           </div>
-          <div class="message-content">{{item.message}}</div>
         </div>
       </mt-tab-container-item>
-      <mt-tab-container-item class="message-body" id="2">
-        <div class="message-item" v-for="(item, index) in messageList" :key="index">
-          <div class="message-header">
-            <h3>{{item.title}}</h3>
-            <span>{{item.createAt}}</span>
+      <mt-tab-container-item class="message-body" id="2"  :infinite-scroll-disabled="isOver" v-infinite-scroll="loadMore" infinite-scroll-distance="0" infinite-scroll-immediate-check="false">
+        <div class="item-body">
+          <div class="message-item" v-for="(item, index) in messageList" :key="index">
+            <div class="message-header">
+              <h3>{{item.title}}</h3>
+              <span>{{item.createAt}}</span>
+            </div>
+            <div class="message-content">{{item.message}}</div>
           </div>
-          <div class="message-content">{{item.message}}</div>
         </div>
       </mt-tab-container-item>
     </mt-tab-container>
@@ -41,23 +45,39 @@ export default {
   },
   data () {
     return {
-      selected: '1'
+      selected: '1',
+      curPage: 1,
+      isOver: false
     }
   },
   async created () {
     await this.getUnreadList()
-    await this.getMessageList({page: 1, limit: 6})
+    await this.getMessageList({page: this.curPage, limit: 6})
     await this.cleanMess()
     this.formatData()
   },
   methods: {
-    ...mapActions(['getMessageList', 'getUnreadList', 'cleanMess']),
+    ...mapActions(['getMessageList', 'getUnreadList', 'cleanMess', 'getMoreMessageList']),
     formatData () {
       for (let item of this.unreadList) {
         item.createAt = moment(item.createAt).format('MM-DD HH:mm')
       }
       for (let item of this.messageList) {
         item.createAt = moment(item.createAt).format('MM-DD HH:mm')
+      }
+    },
+    async loadMore () {
+      if (!this.isOver) {
+        this.curPage += 1
+        let result = await this.getMoreMessageList({
+          page: this.curPage,
+          limit: 6
+        })
+        if (result) {
+          if (result.data.data.length === 0) {
+            this.isOver = true
+          }
+        }
       }
     }
   }
@@ -81,33 +101,37 @@ export default {
   }
   .mint-tab-container {
     overflow: scroll;
-    .message-item {
-      height: 80px;
-      min-height: 80px;
+    .item-body {
       width: 100%;
-      padding: 10px;
-      display: flex;
-      flex-direction: column;
-      border-bottom: 1px solid #e3e3e3;
-      .message-header {
+      height: 100%;
+      .message-item {
+        height: 80px;
+        min-height: 80px;
+        width: 100%;
+        padding: 10px;
         display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        height: 20px;
-        span {
-          margin-right: 30px;
-          color: #8a7f7f
+        flex-direction: column;
+        border-bottom: 1px solid #e3e3e3;
+        .message-header {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+          height: 20px;
+          span {
+            margin-right: 30px;
+            color: #8a7f7f
+          }
         }
-      }
-      .message-content {
-        margin-top: 10px;
-        width: 92%;
-        flex: 1;
-        overflow: hidden;
-        font-size: 14px;
-        word-break: break-all;
-        color: #817878;
+        .message-content {
+          margin-top: 10px;
+          width: 92%;
+          flex: 1;
+          overflow: hidden;
+          font-size: 14px;
+          word-break: break-all;
+          color: #817878;
+        }
       }
     }
   }

@@ -1,4 +1,5 @@
 import api from '../../api/normal'
+import moment from 'moment'
 const state = {
   messageList: [],
   unreadList: []
@@ -15,6 +16,13 @@ const actions = {
     if (result.data.code === 200) {
       commit('setMessageList', result.data.data)
     }
+  },
+  async getMoreMessageList ({commit}, data) {
+    let result = await api.getMessageList(data)
+    if (result.data.code === 200) {
+      commit('addMessageList', result.data.data)
+    }
+    return result
   },
   async getUnreadList ({commit}, data) {
     let result = await api.getUnreadList()
@@ -33,6 +41,12 @@ const mutations = {
   },
   setUnreadList (state, data) {
     state.unreadList = data
+  },
+  addMessageList (state, data) {
+    for (let item of data) {
+      item.createAt = moment(item.createAt).format('MM-DD HH:mm')
+    }
+    state.messageList = state.messageList.concat(data)
   }
 }
 

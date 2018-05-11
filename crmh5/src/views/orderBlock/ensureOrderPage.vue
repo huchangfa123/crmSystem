@@ -34,17 +34,18 @@
     <div class="order-pic">
       <uploadFile
         title='付款截图'
+        v-on:curPicUrl="setOrderPic"
       ></uploadFile>
     </div>
     <div class="bottom">
       <div class="bottom-pic">
         <i class="iconfont whitefont">&#xe601;</i>
-        <div v-if="count > 0" class="bottom-count">{{curOrderData.count}}</div>
+        <div v-if="curOrderData.count > 0" class="bottom-count">{{curOrderData.count}}</div>
       </div>
       <div class="bottom-content">
-        <h3 v-if="totalPrice!==0">￥{{curOrderData.totalPrice}}</h3>
+        <h3 v-if="curOrderData.totalPrice!==0">￥{{curOrderData.totalPrice}}</h3>
       </div>
-      <div class="bottom-btn">
+      <div @click="ensureOrder" class="bottom-btn">
         订单确定
       </div>
     </div>
@@ -52,7 +53,8 @@
 </template>
 <script>
 import uploadFile from '../../components/upload-file'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
+import { Toast } from 'mint-ui'
 export default {
   name: 'ensureOrderPage',
   components: {
@@ -63,14 +65,50 @@ export default {
   },
   data () {
     return {
-      defaultAddress: {receivePeople: '1', receivePhone: '1', address: '1'},
-      addressList: ['1'],
-      count: 5,
-      totalPrice: '123'
+      uploadPic: ''
     }
   },
   created () {
     console.log('curOrderData', this.curOrderData)
+  },
+  methods: {
+    ...mapActions(['createOrder']),
+    setOrderPic (data) {
+      this.uploadPic = data.imgUrl
+    },
+    async ensureOrder () {
+      if (!this.uploadPic) {
+        return Toast({
+          message: '付款截图未提交'
+        })
+      }
+      let { curAddress, orderList } = this.curOrderData
+      console.log('curAddress', curAddress)
+      let conditions = {
+        goods: [],
+        screenshots: this.uploadPic,
+        address: curAddress.address,
+        receivePeople: curAddress.receivePeople,
+        postalCode: curAddress.postalCode,
+        receivePhone: curAddress.receivePhone
+      }
+      for (let item of orderList) {
+        conditions.goods.push({
+          name: item.name,
+          price: item.price,
+          picture: item.pictures[0],
+          num: item.num
+        })
+      }
+      console.log(conditions)
+      let result = await this.createOrder(conditions)
+      if (result.data.code === 200) {
+        Toast({
+          message: '订单成功生成'
+        })
+        return this.$router.replace('/myOrder')
+      }
+    }
   }
 }
 </script>

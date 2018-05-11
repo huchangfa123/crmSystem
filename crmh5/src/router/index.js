@@ -8,14 +8,12 @@ import credentialsPage from '../views/userBlock/credentialsPage'
 import lowerProxyPage from '../views/proxyBlock/lowerProxyPage'
 import proxyStructurePage from '../views/proxyBlock/proxyStructurePage'
 import myRecommendPage from '../views/proxyBlock/myRecommendPage'
-import proxyReviewPage from '../views/proxyBlock/proxyReviewPage'
 import levelUpPage from '../views/proxyBlock/levelUpPage'
-import cancelUpgradePage from '../views/proxyBlock/cancelUpgradePage'
+import reviewProxyPage from '../views/proxyBlock/proxyReviewPage'
 import myOrderPage from '../views/orderBlock/myOrderPage'
 import otherOrderPage from '../views/orderBlock/otherOrderPage'
 import onlineOrderPage from '../views/orderBlock/onlineOrderPage'
 import ensureOrderPage from '../views/orderBlock/ensureOrderPage'
-import myGoodsPage from '../views/goodsBlock/myGoodsPage'
 import profitPage from '../views/goodsBlock/profitPage'
 import messagePage from '../views/messagePage'
 import registerPage from '../views/auth/registerPage'
@@ -76,19 +74,14 @@ let router = new Router({
       component: myRecommendPage
     },
     {
-      path: '/proxyReview',
-      name: 'proxyReviewPage',
-      component: proxyReviewPage
-    },
-    {
       path: '/levelUp',
       name: 'levelUpPage',
       component: levelUpPage
     },
     {
-      path: '/cancelUpgrade',
-      name: 'cancelUpgradePage',
-      component: cancelUpgradePage
+      path: '/reviewProxy',
+      name: 'reviewProxyPage',
+      component: reviewProxyPage
     },
     {
       path: '/myOrder',
@@ -109,11 +102,6 @@ let router = new Router({
       path: '/ensureOrder',
       name: 'ensureOrderPage',
       component: ensureOrderPage
-    },
-    {
-      path: '/myGoods',
-      name: 'myGoodsPage',
-      component: myGoodsPage
     },
     {
       path: '/profit',
