@@ -144,6 +144,14 @@ async function getMyLowerLevel (data, options = {}) {
   return result
 }
 
+/**
+ * 查看差价利润
+*/
+async function getProfitList (data, options = {}) {
+  let result = await axios.get(`${config.apiUrl}/goods/profit`, options)
+  return result
+}
+
 export default {
   getUserData,
   getAddressList,
@@ -162,5 +170,6 @@ export default {
   getMyOrder,
   getMyRecommend,
   getMyLowerLevel,
-  updateOrderState
+  updateOrderState,
+  getProfitList
 }
