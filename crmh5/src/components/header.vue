@@ -1,10 +1,11 @@
 <template>
   <div class="header">
-    <div class="userPic">1</div>
+    <div class="userPic">
+      <img :src="this.userData.avatar">
+    </div>
     <div class="userMsg">
       <p><span style="font-size: 16px">{{this.userData.realName}}</span>[{{this.userData.agent}}]</p>
-      <p style="margin-top: 10px;">上级:呜呜开</p>
-      <p>团队:开挂团队</p>
+      <p style="margin-top: 10px;">上级名:{{this.userData.manager}}</p>
       <router-link style="color: white; margin-top:5px;" to="message">系统信息({{this.userData.messageUnRead}})</router-link>
     </div>
   </div>
@@ -29,13 +30,18 @@ export default {
     background-color: #665b5b;
     .userPic {
       border-radius: 50%;
-      height: 70px;
-      width: 70px;
+      height: 100px;
+      width: 100px;
       display: flex;
       justify-content: center;
       align-items: center;
       background-color: white;
       color: black;
+      img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+      }
     }
     .userMsg {
       font-size: 14px;

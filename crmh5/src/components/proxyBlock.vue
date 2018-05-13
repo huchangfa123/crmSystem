@@ -8,11 +8,11 @@
       <div class="row">
         <div @click="goToLowerProxyPage">
           <i class="iconfont proxyfont">&#xe604;</i>
-          <span>下级代理</span>
+          <span>我的下级</span>
         </div>
         <div @click="goToProxyStructurePage">
           <i class="iconfont proxyfont">&#xe672;</i>
-          <span>团队结构图</span>
+          <span>下级团队结构</span>
         </div>
         <div @click="goToMyRecommendPage">
           <i class="iconfont proxyfont">&#xe630;</i>
@@ -26,7 +26,7 @@
         </div>
         <div @click="goToReviewProxyPage">
           <i class="iconfont proxyfont">&#xe630;</i>
-          <span>下级升级情况</span>
+          <span>升级审核状态</span>
         </div>
         <div></div>
       </div>

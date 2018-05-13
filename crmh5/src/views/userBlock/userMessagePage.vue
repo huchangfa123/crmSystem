@@ -5,35 +5,43 @@
         <mt-button icon="back"></mt-button>
       </router-link>
     </mt-header>
-    <div class="userhead-pic">
-      <mt-palette-button content="+">
-        <div class="my-icon-button"></div>
-      </mt-palette-button>
+    <div class="userhead">
+      <uploadFile
+        title=""
+        picStyle='circle'
+        :defaultImg='this.userData.avatar'
+        v-on:curPicUrl="setUserPic"
+      ></uploadFile>
     </div>
-    <mt-field label="用户名" placeholder="请输入用户名" v-model="userName"></mt-field>
+    <mt-field label="真实姓名" disabled placeholder="请输入用户名" v-model="userName"></mt-field>
     <mt-field label="等级" disabled v-model="level"></mt-field>
-    <mt-field label="手机号" placeholder="请输入手机号" type="email" v-model="num"></mt-field>
+    <mt-field label="手机号" disabled placeholder="请输入手机号" type="phone" v-model="num"></mt-field>
     <mt-field label="用户上级" type="text" disabled v-model="boss"></mt-field>
     <mt-field label="身份证" type="text" disabled v-model="idCard"></mt-field>
     <div class="bottom">
-      <mt-button class="button" type="primary">保存修改</mt-button>
+      <mt-button @click="saveEdited" class="button" type="primary">保存修改</mt-button>
     </div>
   </div>
 </template>
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
+import uploadFile from '../../components/upload-file'
 export default {
   name: 'userMessagePage',
   computed: {
     ...mapGetters(['userData'])
   },
+  components: {
+    uploadFile
+  },
   data () {
     return {
       userName: '',
       num: '',
-      boss: '开挂团队',
+      boss: '',
       level: '',
-      idCard: ''
+      idCard: '',
+      userPic: ''
     }
   },
   created () {
@@ -41,6 +49,21 @@ export default {
     this.num = this.userData.phoneNumber
     this.idCard = this.userData.idCard
     this.level = this.userData.agent
+    this.boss = this.userData.manager || ''
+    this.userPic = this.userData.avatar
+  },
+  methods: {
+    ...mapActions(['editUserMessage']),
+    setUserPic (data) {
+      this.userPic = data.imgUrl
+    },
+    async saveEdited () {
+      let result = await this.editUserMessage({
+        id: this.userData.id,
+        avatar: this.userPic
+      })
+      console.log(result)
+    }
   }
 }
 </script>
@@ -53,16 +76,10 @@ export default {
     height: 60px;
     font-size: 18px;
   }
-  .userhead-pic {
+  .userhead {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 10px;
-    height: 100px;
-    color: white;
-    .mint-main-button {
-      background-color: green;
-    }
   }
   .bottom {
     margin: 10px 0;

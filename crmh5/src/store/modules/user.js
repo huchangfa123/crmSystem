@@ -47,6 +47,14 @@ const actions = {
   async setDefaultAddress ({commit}, data) {
     let result = await api.setDefaultAddress(data)
     return result
+  },
+
+  async editUserMessage ({commit}, data) {
+    let result = await api.editUserMessage(data)
+    if (result.data.code === 200) {
+      commit('editUserData', data)
+    }
+    return result
   }
 }
 
@@ -68,6 +76,9 @@ const mutations = {
         index++
       }
     }
+  },
+  editUserData (state, data) {
+    state.userData.avatar = data.avatar
   }
 }
 

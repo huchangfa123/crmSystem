@@ -19,13 +19,14 @@
 </template>
 <script>
 import { Toast } from 'mint-ui'
-// import { checkPhone } from '../../utils/format'
+import { checkPhone } from '../../utils/format'
 import { mapActions } from 'vuex'
+import api from '../../api/auth'
 export default {
   data () {
     return {
       closeBtn: false,
-      rTime: 5,
+      rTime: 60,
       usePassword: false,
       phone: '',
       password: '',
@@ -33,17 +34,28 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['login']),
+    ...mapActions(['login', 'plogin']),
     Timer () {
       if (this.rTime > 0) {
         this.rTime--
         setTimeout(this.Timer, 1000)
       } else {
         this.closeBtn = false
-        this.rTime = 5
+        this.rTime = 60
       }
     },
-    getIdentifyCode () {
+    async getIdentifyCode () {
+      if (!checkPhone(this.phone)) {
+        return Toast({
+          message: '手机号有误'
+        })
+      }
+      let result = await api.getNumVcode({phone: this.phone})
+      if (result.data.code !== 200) {
+        return Toast({
+          message: result.data.error
+        })
+      }
       this.closeBtn = true
       this.Timer()
     },
@@ -59,30 +71,38 @@ export default {
         })
       }
       return 'success'
-      // if (checkPhone(this.phone)) {
-      //   return 'success'
-      // } else {
-      //   return Toast({
-      //     message: '手机号有误'
-      //   })
-      // }
     },
     async goToMain () {
       let check = this.checkData()
       if (check !== 'success') {
         return
       }
-      let result = await this.login({
-        phoneNumber: this.phone,
-        password: this.password,
-        target: 1
-      })
-      if (result.data.code === 200) {
-        this.$router.push('/main')
-      } else {
-        return Toast({
-          message: result.data.error
+      if (this.usePassword) {
+        let result = await this.login({
+          phoneNumber: this.phone,
+          password: this.password,
+          target: 1
         })
+        if (result.data.code === 200) {
+          this.$router.push('/main')
+        } else {
+          return Toast({
+            message: result.data.error
+          })
+        }
+      } else {
+        let result2 = await this.plogin({
+          phoneNumber: this.phone,
+          code: this.checkCode,
+          target: 1
+        })
+        if (result2.data.code === 200) {
+          this.$router.push('/main')
+        } else {
+          return Toast({
+            message: result2.data.error
+          })
+        }
       }
     },
     setUsePassword () {

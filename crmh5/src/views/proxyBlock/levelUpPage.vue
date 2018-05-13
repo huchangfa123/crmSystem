@@ -9,17 +9,30 @@
       <span>升级等级:</span>
       <mt-button  @click="setPopUp" type="default">{{defaultName}}</mt-button>
     </div>
+    <div class="level-up-pic">
+      <uploadFile
+        title="付款截图"
+        v-on:curPicUrl="setOrderPic"
+      >
+      </uploadFile>
+    </div>
+    <div class="bottom">
+      <mt-button @click="handleApply" class="bottom-btn" type="primary">提交申请</mt-button>
+    </div>
     <mt-popup v-if="popupVisible" class="level-bottom" v-model="popupVisible" position="bottom">
       <mt-picker :slots="slots" @change="onValuesChange"></mt-picker>
     </mt-popup>
-    <div class="bottom">
-      <mt-button class="bottom-btn" type="primary">提交申请</mt-button>
-    </div>
   </div>
 </template>
 <script>
+import { mapActions } from 'vuex'
+import uploadFile from '../../components/upload-file'
+import { Toast } from 'mint-ui'
 export default {
   name: 'levelUpPage',
+  components: {
+    uploadFile
+  },
   data () {
     return {
       popupVisible: false,
@@ -27,20 +40,52 @@ export default {
       buttonName: '',
       slots: [
         {
-          values: ['黄金等级', '白金等级', '钻石等级', '企业等级', '执行董事等级'],
+          values: ['黄金', '白金', '钻石', '执行董事', '企业合伙人'],
           textAlign: 'center',
           className: 'slot1',
           flex: 1
         }
-      ]
+      ],
+      uploadPic: ''
     }
   },
   methods: {
+    ...mapActions(['applyLevel']),
     setPopUp () {
       this.popupVisible = true
     },
     onValuesChange (picker, values) {
       this.defaultName = values[0]
+    },
+    setOrderPic (data) {
+      this.uploadPic = data.imgUrl
+    },
+    async handleApply () {
+      if (!this.uploadPic) {
+        return Toast({
+          message: '截图未上传'
+        })
+      }
+      let levelValue = ['管理员', '企业合伙人', '执行董事', '钻石', '白金', '黄金']
+      let value = levelValue.indexOf(this.defaultName) + 1
+      if (value === -1) {
+        return Toast({
+          message: '请选择升级等级'
+        })
+      }
+      let result = await this.applyLevel({
+        level: value,
+        screenshots: this.uploadPic
+      })
+      if (result.data.code !== 200) {
+        return Toast({
+          message: result.data.error
+        })
+      } else {
+        return Toast({
+          message: '申请成功'
+        })
+      }
     }
   }
 }
@@ -48,6 +93,7 @@ export default {
 <style lang="scss">
 .levelUp {
   display: flex;
+  position: relative;
   flex-direction: column;
   .levelUpHead{
     background-color: #ee3737;
@@ -67,6 +113,11 @@ export default {
     button {
       margin: 5px;
     }
+  }
+  .level-up-pic {
+    width: 100%;
+    display: flex;
+    justify-content: center;
   }
   .level-bottom {
     width: 100%;

@@ -13,7 +13,34 @@ async function login (data, options = {}) {
   return result
 }
 
+/**
+ * 获取手机验证码
+*/
+async function getNumVcode (data, options = {}) {
+  let result = await axios.get(`${config.authUrl}/vcode?phone=${data.phone}`, options)
+  return result
+}
+
+/**
+ * 验证手机验证码
+*/
+async function checkVcode (data, options = {}) {
+  let result = await axios.post(`${config.authUrl}/vcode`, data, options)
+  return result
+}
+
+/**
+ * 手机验证码登录
+*/
+async function plogin (data, options = {}) {
+  let result = await axios.post(`${config.authUrl}/plogin`, data, options)
+  return result
+}
+
 export default {
   register,
-  login
+  login,
+  getNumVcode,
+  checkVcode,
+  plogin
 }

@@ -6,7 +6,7 @@
     <mt-field class="rsinput-box" placeholder="真实姓名" v-model="name"></mt-field>
     <mt-field class="rsinput-box" placeholder="身份证" v-model="idCard"></mt-field>
     <mt-field class="rsinput-box" placeholder="推荐人id" v-model="recommendId"></mt-field>
-    <mt-field class="rsinput-box" placeholder="验证码">
+    <mt-field class="rsinput-box" placeholder="验证码" v-model="code">
       <mt-button @click="getIdentifyCode" type="primary" :disabled=closeBtn>
         获取
         <span v-if="closeBtn">({{rTime}}s)</span>
@@ -22,17 +22,20 @@
 import { checkPhone, checkName, checkidCard } from '../../utils/format'
 import { Toast } from 'mint-ui'
 import { mapActions } from 'vuex'
+import api from '../../api/auth'
 
 export default {
   data () {
     return {
       closeBtn: false,
-      rTime: 5,
+      rTime: 60,
       phone: '',
       password: '',
       name: '',
       idCard: '',
-      recommendId: ''
+      recommendId: '',
+      numIsTrue: false,
+      code: ''
     }
   },
   methods: {
@@ -69,16 +72,44 @@ export default {
         setTimeout(this.Timer, 1000)
       } else {
         this.closeBtn = false
-        this.rTime = 5
+        this.rTime = 60
       }
     },
-    getIdentifyCode () {
+    async getIdentifyCode () {
+      if (!this.phone) {
+        return Toast({
+          message: '请先填手机号'
+        })
+      }
+      if (!checkPhone(this.phone)) {
+        return Toast({
+          message: '手机号输入有误'
+        })
+      }
+      let result = await api.getNumVcode({phone: this.phone})
+      if (result.data.code !== 200) {
+        return Toast({
+          message: result.data.error
+        })
+      }
       this.closeBtn = true
       this.Timer()
     },
     async goToMain () {
       if (this.checkData() !== 'success') {
         return
+      }
+      let checkVcode = await api.checkVcode({
+        phone: this.phone,
+        code: this.code
+      })
+      if (checkVcode.data.code === 200) {
+        this.numIsTrue = true
+      }
+      if (!this.numIsTrue) {
+        return Toast({
+          message: '验证码有误或为空'
+        })
       }
       let result = await this.register({
         phoneNumber: this.phone,

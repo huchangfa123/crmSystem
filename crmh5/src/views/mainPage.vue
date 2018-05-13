@@ -1,5 +1,5 @@
 <template>
-  <div class='mainPage' ref='scroll'>
+  <div class='mainPage' ref='scroll' @click="handleClick">
     <appHeader></appHeader>
     <userBlock></userBlock>
     <proxyBlock></proxyBlock>
@@ -14,6 +14,7 @@ import orderBlock from '../components/orderBlock'
 import userBlock from '../components/userBlock'
 import goodsBlock from '../components/goodsBlock'
 import { mapGetters, mapActions } from 'vuex'
+import { Toast } from 'mint-ui'
 
 export default {
   name: 'mainPage',
@@ -41,6 +42,13 @@ export default {
     },
     deactivated () {
       this.$refs.scroll.removeEventListener('scroll', this.recordScrollPosition)
+    },
+    handleClick () {
+      if (this.$route.query.isActived === false) {
+        Toast({
+          message: '请到等级提升,激活帐号'
+        })
+      }
     }
   },
   components: {

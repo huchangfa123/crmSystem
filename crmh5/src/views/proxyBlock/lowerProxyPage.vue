@@ -27,7 +27,6 @@ export default {
     ...mapGetters(['lowerLevelList', 'userData'])
   },
   async created () {
-    console.log('userData', this.userData)
     let result = await this.getLowerLevelList({id: this.userData.id})
     console.log('result', result)
   },

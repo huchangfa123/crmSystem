@@ -41,37 +41,58 @@ let router = new Router({
     {
       path: '/userMessage',
       name: 'userMessage',
-      component: userMessagePage
+      component: userMessagePage,
+      meta: {
+        requireActive: true
+      }
     },
     {
       path: '/addAddress',
       name: 'addAddressPage',
-      component: addAddressPage
+      component: addAddressPage,
+      meta: {
+        requireActive: true
+      }
     },
     {
       path: '/managerAddress',
       name: 'managerAddressPage',
-      component: managerAddressPage
+      component: managerAddressPage,
+      meta: {
+        requireActive: true
+      }
     },
     {
       path: '/credentials',
       name: 'credentialsPage',
-      component: credentialsPage
+      component: credentialsPage,
+      meta: {
+        requireActive: true
+      }
     },
     {
       path: '/lowerProxy',
       name: 'lowerProxyPage',
-      component: lowerProxyPage
+      component: lowerProxyPage,
+      meta: {
+        requireActive: true
+      }
     },
     {
       path: '/proxyStructure',
       name: 'proxyStructurePage',
-      component: proxyStructurePage
+      component: proxyStructurePage,
+      meta: {
+        requireActive: true
+      }
     },
     {
       path: '/myRecommend',
       name: 'myRecommendPage',
-      component: myRecommendPage
+      component: myRecommendPage,
+      meta: {
+        requireActive: true
+      }
     },
     {
       path: '/levelUp',
@@ -81,32 +102,50 @@ let router = new Router({
     {
       path: '/reviewProxy',
       name: 'reviewProxyPage',
-      component: reviewProxyPage
+      component: reviewProxyPage,
+      meta: {
+        requireActive: true
+      }
     },
     {
       path: '/myOrder',
       name: 'myOrderPage',
-      component: myOrderPage
+      component: myOrderPage,
+      meta: {
+        requireActive: true
+      }
     },
     {
       path: '/otherOrder',
       name: 'otherOrderPage',
-      component: otherOrderPage
+      component: otherOrderPage,
+      meta: {
+        requireActive: true
+      }
     },
     {
       path: '/onlineOrder',
       name: 'onlineOrderPage',
-      component: onlineOrderPage
+      component: onlineOrderPage,
+      meta: {
+        requireActive: true
+      }
     },
     {
       path: '/ensureOrder',
       name: 'ensureOrderPage',
-      component: ensureOrderPage
+      component: ensureOrderPage,
+      meta: {
+        requireActive: true
+      }
     },
     {
       path: '/profit',
       name: 'profitPage',
-      component: profitPage
+      component: profitPage,
+      meta: {
+        requireActive: true
+      }
     },
     {
       path: '/message',
@@ -120,7 +159,18 @@ let router = new Router({
 router.beforeEach((to, from, next) => {
   if (to.name !== 'loginPage' && to.name !== 'registerPage') {
     if (sessionStorage.getItem('actoken')) {
-      next()
+      if (to.matched.some((r) => r.meta.requireActive)) {
+        if (sessionStorage.getItem('isActived') !== 'false') {
+          next()
+        } else {
+          next({
+            path: '/main',
+            query: {isActived: false}
+          })
+        }
+      } else {
+        next()
+      }
     } else {
       next('/login')
     }

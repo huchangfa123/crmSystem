@@ -10,6 +10,16 @@ export async function register ({commit}, data) {
 export async function login ({commit}, data) {
   let result = await auth.login(data)
   sessionStorage.setItem('actoken', `${result.data.token}`)
+  sessionStorage.setItem('isActived', `${result.data.isActive}`)
+  config.headers['Authorization'] = `Bearer ${result.data.token}`
+  api.setAuthorization(`Bearer ${result.data.token}`)
+  return result
+}
+
+export async function plogin ({commit}, data) {
+  let result = await auth.plogin(data)
+  sessionStorage.setItem('actoken', `${result.data.token}`)
+  sessionStorage.setItem('isActived', `${result.data.isActive}`)
   config.headers['Authorization'] = `Bearer ${result.data.token}`
   api.setAuthorization(`Bearer ${result.data.token}`)
   return result

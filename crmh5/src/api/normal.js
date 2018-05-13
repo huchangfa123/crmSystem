@@ -152,6 +152,38 @@ async function getProfitList (data, options = {}) {
   return result
 }
 
+/**
+ * 等级提升
+*/
+async function levelUp (data, options = {}) {
+  let result = await axios.post(`${config.apiUrl}/level`, data, options)
+  return result
+}
+
+/**
+ * 我的升级记录
+*/
+async function myUpgradeList (data, options = {}) {
+  let result = await axios.get(`${config.apiUrl}/level`, options)
+  return result
+}
+
+/**
+ * 下级升级记录
+*/
+async function otherUpgradeList (data, options = {}) {
+  let result = await axios.get(`${config.apiUrl}/sublevel`, options)
+  return result
+}
+
+/**
+ * 修改用户资料
+*/
+async function editUserMessage (data, options = {}) {
+  let result = await axios.put(`${config.apiUrl}/user/${data.id}`, data, options)
+  return result
+}
+
 export default {
   getUserData,
   getAddressList,
@@ -171,5 +203,9 @@ export default {
   getMyRecommend,
   getMyLowerLevel,
   updateOrderState,
-  getProfitList
+  getProfitList,
+  levelUp,
+  myUpgradeList,
+  otherUpgradeList,
+  editUserMessage
 }

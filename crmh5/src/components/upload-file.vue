@@ -28,6 +28,12 @@ export default {
       default () {
         return '+'
       }
+    },
+    defaultImg: {
+      type: String,
+      default () {
+        return ''
+      }
     }
   },
   data () {
@@ -40,6 +46,7 @@ export default {
   },
   created () {
     this.defaultStyle = this.defaultStyle + ' ' + this.picStyle
+    this.headerImage = this.defaultImg
   },
   methods: {
     ...mapActions(['uploadPayPic']),
@@ -244,6 +251,7 @@ export default {
   margin-left: 15px;
   input[type="file"] {
     color: transparent;
+    width: 70px;
   }
 }
 .circle {
