@@ -121,6 +121,14 @@ async function editYunData (data, options = {}) {
   return result
 }
 
+/**
+ * 获取盈利数据
+*/
+async function getProfitData (data, options = {}) {
+  let result = await axios.post(`${config.apiUrl}/${data.urlType}`, data, options)
+  return result
+}
+
 export default {
   setAuthorization,
   addGoods,
@@ -136,5 +144,6 @@ export default {
   getYunData,
   addYunData,
   editYunData,
-  editBoss
+  editBoss,
+  getProfitData
 }

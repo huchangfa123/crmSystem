@@ -195,6 +195,15 @@ export default {
           console.log(result)
           break
         }
+        case 4: {
+          let result = await this.updateOrderState({
+            id,
+            state: 5,
+            index
+          })
+          console.log(result)
+          break
+        }
         default:
           break
       }

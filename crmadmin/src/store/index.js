@@ -5,6 +5,7 @@ import goods from './modules/goods'
 import users from './modules/users'
 import order from './modules/order'
 import publicMessage from './modules/publicMessage'
+import profit from './modules/profit'
 
 Vue.use(Vuex)
 
@@ -14,6 +15,7 @@ export default new Vuex.Store({
     goods,
     users,
     order,
-    publicMessage
+    publicMessage,
+    profit
   }
 })
