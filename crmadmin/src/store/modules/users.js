@@ -43,7 +43,7 @@ const actions = {
   async editBoss ({commit}, data) {
     let result = await api.editBoss(data)
     if (result.data.code === 200) {
-      commit('editBoss', data)
+      commit('editBoss', {managerId: data.managerId, managerName: result.data.manager, index: data.index})
     }
     return result
   }
@@ -70,6 +70,10 @@ const mutations = {
     let stateName = ['待处理', '已批准', '已拒绝']
     state.reviewList[data.index].state = stateName[data.deel - 1]
     state.reviewList[data.index].deel = parseInt(data.deel)
+  },
+  editBoss (state, data) {
+    state.userList[data.index].managerName = data.managerName
+    state.userList[data.index].managerId = data.managerId
   }
 }
 

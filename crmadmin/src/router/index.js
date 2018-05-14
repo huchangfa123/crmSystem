@@ -10,8 +10,7 @@ import goodsListPage from '../views/goodsBlock/goodsListPage'
 import addGoodsPage from '../views/goodsBlock/addGoodsPage'
 import adSettingPage from '../views/publicMessageBLock/adSettingPage'
 import yunAddressPage from '../views/publicMessageBLock/yunAddressPage'
-import companyDataPage from '../views/statisticsBlock/companyDataPage'
-import ownDataPage from '../views/statisticsBlock/ownDataPage'
+import profitDataPage from '../views/statisticsBlock/profitDataPage'
 
 Vue.use(Router)
 
@@ -69,14 +68,9 @@ export default new Router({
           meta: ['公共信息管理', '公告编写']
         },
         {
-          path: '/companyData',
-          component: companyDataPage,
+          path: '/profitData',
+          component: profitDataPage,
           meta: ['数据统计', '平台盈利']
-        },
-        {
-          path: '/ownData',
-          component: ownDataPage,
-          meta: ['数据统计', '个人盈利']
         }
       ]
     }

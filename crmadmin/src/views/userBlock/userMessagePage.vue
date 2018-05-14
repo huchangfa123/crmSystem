@@ -166,8 +166,10 @@ export default {
     async saveBoss () {
       let result = await this.editBoss({
         userId: this.userList[this.selectItem].id,
-        managerId: this.bossForm.id
+        managerId: this.bossForm.id,
+        index: this.selectItem
       })
+      this.bossVisible = false
       if (result.data.code === 200) {
         return this.$message({
           showClose: true,

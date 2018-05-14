@@ -48,8 +48,7 @@
               <span>数据统计</span>
             </template>
             <el-menu-item-group>
-              <el-menu-item index="ownData">个人盈利</el-menu-item>
-              <el-menu-item index="companyData">平台盈利</el-menu-item>
+              <el-menu-item index="profitData">盈利统计</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
         </el-menu>
