@@ -4,7 +4,6 @@ import loginPage from '../views/loginPage'
 import mainPage from '../views/mainPage'
 import userMessagePage from '../views/userBlock/userMessagePage'
 import addUserMessagePage from '../views/userBlock/addUserMessagePage'
-import exUserBossPage from '../views/userBlock/exUserBossPage'
 import upgradeReviewPage from '../views/userBlock/upgradeReviewPage'
 import orderMessagePage from '../views/orderBlock/orderMessagePage'
 import goodsListPage from '../views/goodsBlock/goodsListPage'
@@ -38,11 +37,6 @@ export default new Router({
           path: '/addUser',
           component: addUserMessagePage,
           meta: ['用户管理', '添加用户']
-        },
-        {
-          path: '/exUserBoss',
-          component: exUserBossPage,
-          meta: ['用户管理', '修改用户上级']
         },
         {
           path: '/upgradeReview',

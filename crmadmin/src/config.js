@@ -4,5 +4,6 @@ export default {
     'Authorization': `Bearer ${sessionStorage.getItem('actoken')}`
   },
   apiUrl: 'http://39.108.159.0/api/mana',
-  authUrl: 'http://39.108.159.0/api/v1'
+  authUrl: 'http://39.108.159.0/api/v1',
+  appUrl: 'http://39.108.159.0/api/auth'
 }

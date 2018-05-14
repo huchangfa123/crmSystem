@@ -12,7 +12,6 @@
             <el-menu-item index="userMessage">用户信息</el-menu-item>
             <el-menu-item index="addUser">添加用户</el-menu-item>
             <el-menu-item index="upgradeReview">用户升级审核</el-menu-item>
-            <el-menu-item index="exUserBoss">修改用户上级</el-menu-item>
           </el-submenu>
           <el-submenu index="3">
             <template slot="title">

@@ -132,9 +132,8 @@ export default {
 <style lang='less' scoped>
   .contain {
     width: 100%;
-    height: 60vh;
+    height: 80vh;
     overflow: auto;
-    padding: 50px;
     display: flex;
     justify-content: center;
     align-items: center;

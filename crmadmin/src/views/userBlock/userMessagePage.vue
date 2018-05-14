@@ -22,7 +22,7 @@
     </div>
     <el-table
       :data="userList"
-      style="width: 700px"
+      style="width: 1000px"
       height="50px"
       class="user-table"
       border
@@ -30,6 +30,11 @@
       <el-table-column
         prop="realName"
         label="姓名"
+        width="180">
+      </el-table-column>
+      <el-table-column
+        prop="id"
+        label="用户id"
         width="180">
       </el-table-column>
       <el-table-column
@@ -43,12 +48,15 @@
       >
       </el-table-column>
       <el-table-column
-        prop="profit"
-        label="个人盈利">
+        prop="isManager"
+        label="是否为管理员">
       </el-table-column>
       <el-table-column
         prop="profit"
         label="直接上级">
+        <template slot-scope="scope">
+          <el-button @click="showBoss(scope.$index)" type="text" size="mini">查看</el-button>
+        </template>
       </el-table-column>
     </el-table>
     <div class="user-bottom">
@@ -62,6 +70,16 @@
         :total="listCount">
       </el-pagination>
     </div>
+    <el-dialog title="上级信息" :visible.sync="bossVisible">
+      <el-form :model="bossForm" label-width="70px">
+        <el-form-item label="上级id:">
+          <el-input v-model="bossForm.id"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="saveBoss">保存修改</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -80,7 +98,11 @@ export default {
         realName: '',
         level: ''
       },
-      currentPage: 1
+      bossForm: {
+        id: ''
+      },
+      currentPage: 1,
+      bossVisible: false
     }
   },
   methods: {
@@ -88,8 +110,9 @@ export default {
     formatList () {
       let levelName = ['管理员', '企业合伙人', '执行董事', '钻石', '白金', '黄金']
       for (let item of this.userList) {
-        item.level = levelName[item.level - 1]
+        item.level = levelName[item.level - 1] || '未激活'
         item.createAt = moment(item.createAt).format('YYYY-MM-DD HH:mm')
+        item.isManager = item.isManager ? '是' : '否'
       }
     },
     async handleCurrentChange (val) {
@@ -103,6 +126,7 @@ export default {
         sort: {createAt: -1}
       })
       this.formatList()
+      console.log('userList', this.userList)
     },
     async search () {
       let conditions = {}
@@ -127,6 +151,12 @@ export default {
           type: 'warning'
         })
       }
+    },
+    showBoss (index) {
+      this.bossVisible = true
+    },
+    saveBoss () {
+      console.log(1)
     }
   }
 }

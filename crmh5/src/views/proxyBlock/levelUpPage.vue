@@ -50,7 +50,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['applyLevel']),
+    ...mapActions(['applyLevel', 'applyActive']),
     setPopUp () {
       this.popupVisible = true
     },
@@ -73,18 +73,36 @@ export default {
           message: '请选择升级等级'
         })
       }
-      let result = await this.applyLevel({
-        level: value,
-        screenshots: this.uploadPic
-      })
-      if (result.data.code !== 200) {
-        return Toast({
-          message: result.data.error
+      if (sessionStorage.getItem('isActived') === 'true') {
+        let result = await this.applyLevel({
+          level: value,
+          screenshots: this.uploadPic
         })
+        if (result.data.code !== 200) {
+          return Toast({
+            message: result.data.error
+          })
+        } else {
+          Toast({
+            message: '申请成功'
+          })
+          this.$router.replace('/reviewProxy')
+        }
       } else {
-        return Toast({
-          message: '申请成功'
+        let result2 = await this.applyActive({
+          level: value,
+          screenshots: this.uploadPic
         })
+        if (result2.data.code !== 200) {
+          return Toast({
+            message: result2.data.error
+          })
+        } else {
+          Toast({
+            message: '申请成功'
+          })
+          this.$router.replace('/reviewProxy')
+        }
       }
     }
   }

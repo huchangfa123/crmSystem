@@ -30,6 +30,10 @@ const actions = {
     let result = await api.levelUp(data)
     return result
   },
+  async applyActive ({commit}, data) {
+    let result = await api.activeLevelUp(data)
+    return result
+  },
   async getMyUpgradeList ({commit}, data) {
     let result = await api.myUpgradeList()
     if (result.data.code === 200) {

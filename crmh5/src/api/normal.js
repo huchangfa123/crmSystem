@@ -161,6 +161,14 @@ async function levelUp (data, options = {}) {
 }
 
 /**
+ * 激活帐号的等级提升
+*/
+async function activeLevelUp (data, options = {}) {
+  let result = await axios.post(`${config.apiUrl}/user/active`, data, options)
+  return result
+}
+
+/**
  * 我的升级记录
 */
 async function myUpgradeList (data, options = {}) {
@@ -207,5 +215,6 @@ export default {
   levelUp,
   myUpgradeList,
   otherUpgradeList,
-  editUserMessage
+  editUserMessage,
+  activeLevelUp
 }

@@ -61,6 +61,9 @@ const actions = {
 const mutations = {
   initUserData (state, data) {
     state.userData = data
+    if (data.isActive) {
+      sessionStorage.setItem('isActived', true)
+    }
   },
   initAddressList (state, data) {
     state.addressList = data
