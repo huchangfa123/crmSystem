@@ -19,14 +19,15 @@
   </div>
 </template>
 <script>
-import api from '../../api/normal'
+import { mapActions, mapGetters } from 'vuex'
 export default {
   data () {
     return {
       ruleForm: {
         address: '',
         password: '',
-        des: ''
+        des: '',
+        id: ''
       },
       rules: {
         address: [ { required: true, message: '请输入地址', trigger: 'blur' } ],
@@ -35,24 +36,48 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapGetters(['yunData'])
+  },
+  async created () {
+    await this.getYunData()
+    if (this.yunData.length !== 0) {
+      this.ruleForm.address = this.yunData[0].Link
+      this.ruleForm.password = this.yunData[0].pass
+      this.ruleForm.des = this.yunData[0].des
+      this.ruleForm.id = this.yunData[0].id
+    }
+  },
   methods: {
+    ...mapActions(['getYunData', 'addYunData', 'editYunData']),
     submitForm () {
       this.$refs['ruleForm'].validate(async (valid) => {
         if (valid) {
-          let result = await api.submitAnnouncement({
-            title: this.ruleForm.title,
-            message: this.ruleForm.content
-          })
+          let result = {}
+          if (this.yunData.length === 0) {
+            result = await this.addYunData({
+              des: this.ruleForm.des,
+              Link: this.ruleForm.address,
+              pass: this.ruleForm.password
+            })
+          } else {
+            result = await this.editYunData({
+              id: this.ruleForm.id,
+              des: this.ruleForm.des,
+              Link: this.ruleForm.address,
+              pass: this.ruleForm.password
+            })
+          }
           if (result.data.code === 200) {
             return this.$message({
               showClose: true,
-              message: '发布成功',
+              message: '修改成功',
               type: 'success'
             })
           } else {
             return this.$message({
               showClose: true,
-              message: '发布失败',
+              message: '修改失败',
               type: 'warning'
             })
           }

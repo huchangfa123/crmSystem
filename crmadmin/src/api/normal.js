@@ -82,6 +82,14 @@ async function addUser (data, options = {}) {
 }
 
 /**
+ * 修改用户上级
+*/
+async function editBoss (data, options = {}) {
+  let result = await axios.post(`${config.apiUrl}/user/manage`, data, options)
+  return result
+}
+
+/**
  * 提交公告
 */
 async function submitAnnouncement (data, options = {}) {
@@ -127,5 +135,6 @@ export default {
   getOrderList,
   getYunData,
   addYunData,
-  editYunData
+  editYunData,
+  editBoss
 }

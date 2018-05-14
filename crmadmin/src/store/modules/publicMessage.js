@@ -1,24 +1,40 @@
 import api from '../../api/normal'
 
 const state = {
-  yunAddress: '',
-  yunPassword: ''
+  yunData: []
 }
 
 const getters = {
-  yunAddress: state => state.yunAddress,
-  yunPassword: state => state.yunPassword
+  yunData: state => state.yunData
 }
 
 const actions = {
-  getYunData ({commit}, data) {
-    let result = await 
+  async getYunData ({commit}, data) {
+    let result = await api.getYunData()
+    commit('initData', result.data.data)
+    return result
+  },
+  async addYunData ({commit}, data) {
+    let result = await api.addYunData(data)
+    commit('addData', data)
+    return result
+  },
+  async editYunData ({commit}, data) {
+    let result = await api.editYunData(data)
+    commit('editData', data)
+    return result
   }
 }
 
 const mutations = {
-  setMainPageTop (state, mainPageTop) {
-    state.mainPageTop = mainPageTop
+  initData (state, data) {
+    state.yunData = data
+  },
+  addData (state, data) {
+    state.yunData = data
+  },
+  editData (state, data) {
+    state.yunData = data
   }
 }
 

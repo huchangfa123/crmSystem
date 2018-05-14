@@ -39,6 +39,13 @@ const actions = {
       commit('editReviewList', data)
     }
     return result
+  },
+  async editBoss ({commit}, data) {
+    let result = await api.editBoss(data)
+    if (result.data.code === 200) {
+      commit('editBoss', data)
+    }
+    return result
   }
 }
 

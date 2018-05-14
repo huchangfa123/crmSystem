@@ -28,13 +28,13 @@
       border
     >
       <el-table-column
-        prop="realName"
-        label="姓名"
-        width="180">
-      </el-table-column>
-      <el-table-column
         prop="id"
         label="用户id"
+        min-width="180">
+      </el-table-column>
+      <el-table-column
+        prop="realName"
+        label="姓名"
         width="180">
       </el-table-column>
       <el-table-column
@@ -71,9 +71,12 @@
       </el-pagination>
     </div>
     <el-dialog title="上级信息" :visible.sync="bossVisible">
-      <el-form :model="bossForm" label-width="70px">
+      <el-form :model="bossForm" label-width="80px">
         <el-form-item label="上级id:">
           <el-input v-model="bossForm.id"></el-input>
+        </el-form-item>
+        <el-form-item label="上级姓名:">
+          <el-input :disabled="true" v-model="bossForm.managerName"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -99,14 +102,16 @@ export default {
         level: ''
       },
       bossForm: {
-        id: ''
+        id: '',
+        managerName: ''
       },
       currentPage: 1,
-      bossVisible: false
+      bossVisible: false,
+      selectItem: ''
     }
   },
   methods: {
-    ...mapActions(['getUserList']),
+    ...mapActions(['getUserList', 'editBoss']),
     formatList () {
       let levelName = ['管理员', '企业合伙人', '执行董事', '钻石', '白金', '黄金']
       for (let item of this.userList) {
@@ -153,10 +158,23 @@ export default {
       }
     },
     showBoss (index) {
+      this.bossForm.id = this.userList[index].managerId
+      this.bossForm.managerName = this.userList[index].managerName
+      this.selectItem = index
       this.bossVisible = true
     },
-    saveBoss () {
-      console.log(1)
+    async saveBoss () {
+      let result = await this.editBoss({
+        userId: this.userList[this.selectItem].id,
+        managerId: this.bossForm.id
+      })
+      if (result.data.code === 200) {
+        return this.$message({
+          showClose: true,
+          type: 'success',
+          message: '修改成功'
+        })
+      }
     }
   }
 }
