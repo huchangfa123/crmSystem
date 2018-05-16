@@ -1,4 +1,4 @@
-FROM node:stretch
+FROM node:stretch AS build-dev
 MAINTAINER ChangFa Hu <hcf1095246249@qq.com>
 
 COPY package.json /tmp/package.json
@@ -9,5 +9,5 @@ RUN cd /tmp && cnpm install --save eslint eslint-plugin-css-modules && cnpm inst
 RUN cd /tmp && npm run build
 
 FROM nginx
-COPY /tmp/dist /usr/share/nginx/html
+COPY --from=build-dev /tmp/dist /usr/share/nginx/html
 CMD ["nginx", "-g", "'daemon off;'"]
