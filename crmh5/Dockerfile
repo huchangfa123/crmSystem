@@ -10,4 +10,4 @@ RUN cd /tmp && npm run build
 
 FROM nginx
 COPY --from=build /tmp/dist /usr/share/nginx/html
-CMD ["nginx", "-g", "'daemon off;'"]
+CMD nginx -g 'daemon off;'
