@@ -18,6 +18,7 @@ import profitPage from '../views/goodsBlock/profitPage'
 import messagePage from '../views/messagePage'
 import registerPage from '../views/auth/registerPage'
 import loginPage from '../views/auth/loginPage'
+import inviteCodePage from '../views/userBlock/inviteCodePage'
 
 Vue.use(Router)
 
@@ -66,6 +67,14 @@ let router = new Router({
       path: '/credentials',
       name: 'credentialsPage',
       component: credentialsPage,
+      meta: {
+        requireActive: true
+      }
+    },
+    {
+      path: '/inviteCode',
+      name: 'inviteCodePage',
+      component: inviteCodePage,
       meta: {
         requireActive: true
       }

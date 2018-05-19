@@ -25,6 +25,11 @@ import { mapActions } from 'vuex'
 import api from '../../api/auth'
 
 export default {
+  created () {
+    if (this.$route.query.recommendId) {
+      this.recommendId = this.$route.query.recommendId
+    }
+  },
   data () {
     return {
       closeBtn: false,

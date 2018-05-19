@@ -19,6 +19,14 @@
           <span>授权证书</span>
         </div>
       </div>
+      <div class="row">
+        <div @click="goToInviteCodePage">
+          <i class="iconfont userfont">&#xe63a;</i>
+          <span>邀请二维码</span>
+        </div>
+        <div></div>
+        <div></div>
+      </div>
     </div>
   </div>
 </template>
@@ -43,6 +51,9 @@ export default {
     },
     goToCredentialsPage () {
       this.$router.replace({path: '/credentials'})
+    },
+    goToInviteCodePage () {
+      this.$router.replace('/inviteCode')
     }
   }
 }
