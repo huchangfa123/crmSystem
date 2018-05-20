@@ -87,6 +87,12 @@ export default {
               type: 'success',
               message: '添加成功'
             })
+          } else {
+            return this.$message({
+              showClose: true,
+              type: 'warning',
+              message: result.data.error
+            })
           }
         } else {
           return this.$message({

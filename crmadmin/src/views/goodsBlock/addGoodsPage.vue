@@ -8,7 +8,16 @@
         <el-input class="goodsInput" placeholder="商品描述" v-model="goodsForm.des"></el-input>
       </el-form-item>
       <el-form-item label="商品图片:" prop="picUrl">
-        <el-input class="goodsInput" placeholder="图片url" v-model="goodsForm.picUrl"></el-input>
+        <el-upload
+          class="upload-demo"
+          action="http://api.youshuangruomei.com/api/auth/upload"
+          :before-upload="beforeAvatarUpload"
+          :on-success="handleAvatarSuccess"
+          :headers="myHeaders"
+          :limit="1"
+          :file-list="fileList">
+          <el-button size="small" type="primary">点击上传</el-button>
+        </el-upload>
       </el-form-item>
       <el-form-item label="价格规则:">
         <el-table class="form-table" border :data="goodsForm.rules">
@@ -46,9 +55,14 @@ export default {
       },
       rules: {
         name: { required: true, message: '请输入名称', trigger: 'blur' },
-        des: { required: true, message: '请输入描述', trigger: 'blur' },
-        picUrl: { required: true, message: '请输入地址', trigger: 'blur' }
-      }
+        des: { required: true, message: '请输入描述', trigger: 'blur' }
+      },
+      postData: {
+        token: 'your token'
+      },
+      fileList: [],
+      fileName: '',
+      myHeaders: {Authorization: `Bearer ${sessionStorage.getItem('actoken')}`}
     }
   },
   computed: {
@@ -61,7 +75,11 @@ export default {
         if (item.id === this.$route.query.id) {
           this.goodsForm.name = item.name
           this.goodsForm.des = item.des
-          this.goodsForm.picUrl = item.pictures[0]
+          this.fileList.push({
+            uid: item.id,
+            name: item.pictures[0].split('/')[3],
+            url: item.pictures[0]
+          })
           for (let key of item.strategies) {
             for (let rule of this.goodsForm.rules) {
               if (rule.value === key.agent) {
@@ -76,6 +94,17 @@ export default {
   },
   methods: {
     ...mapActions(['addGoods', 'editGoods']),
+    beforeAvatarUpload (file) {
+      console.log(file)
+      this.fileName = file.name
+    },
+    handleAvatarSuccess (res) {
+      this.fileList.push({
+        url: res.imgUrl,
+        name: this.fileName
+      })
+      this.goodsForm.picUrl = res.imgUrl
+    },
     formatData () {
       let result = {
         name: this.goodsForm.name,
@@ -111,12 +140,21 @@ export default {
       }
       this.$refs['ruleForm'].validate(async (valid) => {
         if (valid) {
+          let result = {}
           if (!this.$route.query.edit) {
-            await this.addGoods(this.formatData())
+            result = await this.addGoods(this.formatData())
           } else {
-            await this.editGoods(this.formatData())
+            result = await this.editGoods(this.formatData())
           }
-          this.$router.replace('/goodsList')
+          if (result.data.code === 200) {
+            this.$router.replace('/goodsList')
+          } else {
+            return this.$message({
+              showClose: true,
+              message: result.data.error,
+              type: 'warning'
+            })
+          }
         } else {
           return this.$message({
             showClose: true,

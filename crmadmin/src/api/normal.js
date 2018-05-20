@@ -129,6 +129,14 @@ async function getProfitData (data, options = {}) {
   return result
 }
 
+/**
+ * 获取图片token
+*/
+async function getPicToken (data, options = {}) {
+  let result = await axios.post(`${config.apiUrl}/uploadToken`)
+  return result
+}
+
 export default {
   setAuthorization,
   addGoods,
@@ -145,5 +153,6 @@ export default {
   addYunData,
   editYunData,
   editBoss,
-  getProfitData
+  getProfitData,
+  getPicToken
 }
