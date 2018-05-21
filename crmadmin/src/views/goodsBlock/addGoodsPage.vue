@@ -75,6 +75,7 @@ export default {
         if (item.id === this.$route.query.id) {
           this.goodsForm.name = item.name
           this.goodsForm.des = item.des
+          this.goodsForm.picUrl = item.pictures[0]
           this.fileList.push({
             uid: item.id,
             name: item.pictures[0].split('/')[3],
