@@ -286,14 +286,15 @@ export default {
           display: flex;
           flex-direction: row;
           .itemDes {
-            width: 30%;
+            width: 60%;
             display: flex;
             align-items: center;
+            justify-content: center;
             color: #7e7373;
             padding-left: 10px;
             img {
-              width: 30px;
-              height: auto;
+              width: 35px;
+              height: 35px;
               margin-left: 5px;
               margin-right: 20px;
             }

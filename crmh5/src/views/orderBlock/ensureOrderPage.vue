@@ -178,14 +178,21 @@ export default {
       flex-direction: row;
       border-bottom: 1px solid #e3e3e3;
       .itemDes {
-        width: 30%;
+        width: 60%;
         padding: 5px 5px;
+        overflow : hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        line-height: 22px;
         h3 {
           font-size: 16px;
         }
         p {
+          width: 90%;
           font-size: 14px;
-          color: #7e7373
+          color: #7e7373;
         }
       }
       .itemPrice {
