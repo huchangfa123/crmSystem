@@ -255,9 +255,10 @@ export default {
         display: flex;
         align-items: center;
         justify-content: center;
+        overflow: hidden;
         img {
           width: 100px;
-          height: auto;
+          height: 100px;
           border: 1px solid #e0e0e0;
         }
       }
@@ -281,6 +282,10 @@ export default {
           word-break: break-all;
           .goods-des {
             width: 70%;
+            font-size: 14px;
+            text-overflow: ellipsis;
+            -webkit-line-clamp: 2;
+            overflow: hidden;
             color: #7e7373;
           }
           .goods-btn {
