@@ -6,18 +6,20 @@
       </router-link>
     </mt-header>
     <div class="goods-list">
-      <div class="goods-item" v-for="(item, index) in this.profitList" :key='index'>
-        <div class="goods-pic">
-          <img :src='item.picture'>
-        </div>
-        <div class="goods-content" v-if="profitList.length > 0">
-          <div class="goods-name">
-            <h3>{{item.name}}</h3>
-            <span>当前等级: {{item.profit[0].agent}}</span>
+      <div v-for="(good, index) in this.profitList" :key='index'>
+        <div class="goods-item" v-for="(item, index2) in good.profit" :key='index2'>
+          <div class="goods-pic">
+            <img :src='good.picture'>
           </div>
-          <div class="goods-bottom">
-            <div class="goods-des">{{item.des}}</div>
-            <span>单价利润: <h3>￥{{item.profit[0].profit}}</h3></span>
+          <div class="goods-content" v-if="profitList.length > 0">
+            <div class="goods-name">
+              <h3>{{good.name}}</h3>
+              <span>对应等级: {{item.agent}}</span>
+            </div>
+            <div class="goods-bottom">
+              <div class="goods-des">{{good.des}}</div>
+              <span>单价利润: <h3>￥{{item.profit}}</h3></span>
+            </div>
           </div>
         </div>
       </div>
@@ -33,6 +35,7 @@ export default {
   },
   async created () {
     await this.getProfitList()
+    console.log(this.profitList)
   },
   methods: {
     ...mapActions(['getProfitList'])
