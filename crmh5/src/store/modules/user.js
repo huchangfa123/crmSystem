@@ -94,7 +94,6 @@ const mutations = {
     state.userData.avatar = data.avatar
   },
   initPublicMessage (state, data) {
-    console.log(111, data)
     state.publicMessage = data
   }
 }

@@ -21,7 +21,6 @@ export default {
   },
   async created () {
     await this.getPublicMessage()
-    console.log(this.publicMessage)
   },
   methods: {
     ...mapActions(['getPublicMessage'])
