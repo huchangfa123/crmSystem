@@ -13,12 +13,12 @@
           </div>
           <div class="goods-content" v-if="profitList.length > 0">
             <div class="goods-name">
-              <h3>{{good.name}}</h3>
-              <span>对应等级: {{item.agent}}</span>
+              <h4>{{good.name}}</h4>
+              <span>{{item.agent}}</span>
             </div>
             <div class="goods-bottom">
               <div class="goods-des">{{good.des}}</div>
-              <span>单价利润: <h3>￥{{item.profit}}</h3></span>
+              <span>利润: <h3>￥{{item.profit.toFixed(2)}}</h3></span>
             </div>
           </div>
         </div>
@@ -72,7 +72,7 @@ export default {
         justify-content: center;
         img {
           width: 100px;
-          height: auto;
+          height: 100px;
           border: 1px solid #e0e0e0;
         }
       }
@@ -82,15 +82,19 @@ export default {
         flex-direction: column;
         .goods-name {
           width: 100%;
-          padding-left: 10px;
+          padding-left: 5px;
           padding-top: 10px;
           height: 20px;
           display: flex;
           flex-direction: row;
           align-items: center;
           justify-content: space-between;
+          h4 {
+            width: 70%;
+            font-size: 16px;
+          }
           span {
-            margin-right: 30px;
+            margin-right: 20px;
             color: #7e7373;
             font-size: 14px;
           }
@@ -106,6 +110,11 @@ export default {
           .goods-des {
             width: 55%;
             color: #7e7373;
+            overflow : hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
           }
           span {
             font-size: 14px;

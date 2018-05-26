@@ -1,15 +1,25 @@
 import api from '../../api/normal'
 const state = {
   userData: {},
-  addressList: []
+  addressList: [],
+  publicMessage: []
 }
 
 const getters = {
   userData: state => state.userData,
-  addressList: state => state.addressList
+  addressList: state => state.addressList,
+  publicMessage: state => state.publicMessage
 }
 
 const actions = {
+  async getPublicMessage ({commit}, data) {
+    let result = await api.getPublicMessage()
+    if (result.data.code === 200) {
+      commit('initPublicMessage', result.data.data)
+    }
+    return result
+  },
+
   async getUserData ({commit}, data) {
     let result = await api.getUserData()
     if (result.code === 200) {
@@ -82,6 +92,10 @@ const mutations = {
   },
   editUserData (state, data) {
     state.userData.avatar = data.avatar
+  },
+  initPublicMessage (state, data) {
+    console.log(111, data)
+    state.publicMessage = data
   }
 }
 

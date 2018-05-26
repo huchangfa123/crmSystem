@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "eslint-plugin-css-modules": "^2.7.5",
     "exif-js": "^2.3.0",
     "mint-ui": "^2.2.13",
     "moment": "^2.22.1",

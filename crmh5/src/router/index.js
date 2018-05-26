@@ -19,6 +19,7 @@ import messagePage from '../views/messagePage'
 import registerPage from '../views/auth/registerPage'
 import loginPage from '../views/auth/loginPage'
 import inviteCodePage from '../views/userBlock/inviteCodePage'
+import publicMessagePage from '../views/userBlock/publicMessagePage'
 
 Vue.use(Router)
 
@@ -75,6 +76,14 @@ let router = new Router({
       path: '/inviteCode',
       name: 'inviteCodePage',
       component: inviteCodePage,
+      meta: {
+        requireActive: true
+      }
+    },
+    {
+      path: '/publicMessage',
+      name: 'publicMessagePage',
+      component: publicMessagePage,
       meta: {
         requireActive: true
       }

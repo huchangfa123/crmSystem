@@ -47,7 +47,7 @@
         <div v-if="count > 0" class="bottom-count">{{count}}</div>
       </div>
       <div class="bottom-content">
-        <h3 v-if="totalPrice!==0">￥{{totalPrice}}</h3>
+        <h3 v-if="totalPrice!==0">￥{{totalPrice.toFixed(2)}}</h3>
       </div>
       <div @click="goToEnsure" class="bottom-btn">
         提交订单
@@ -285,6 +285,8 @@ export default {
             font-size: 14px;
             text-overflow: ellipsis;
             -webkit-line-clamp: 2;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
             overflow: hidden;
             color: #7e7373;
           }

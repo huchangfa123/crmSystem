@@ -192,6 +192,14 @@ async function editUserMessage (data, options = {}) {
   return result
 }
 
+/**
+ * 获取公共信息
+*/
+async function getPublicMessage (data, options = {}) {
+  let result = await axios.get(`${config.apiUrl}/public`, options)
+  return result
+}
+
 export default {
   getUserData,
   getAddressList,
@@ -216,5 +224,6 @@ export default {
   myUpgradeList,
   otherUpgradeList,
   editUserMessage,
-  activeLevelUp
+  activeLevelUp,
+  getPublicMessage
 }

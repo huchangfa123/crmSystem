@@ -21,7 +21,10 @@ const mutations = {
   initProfitList (state, data) {
     let levelName = ['管理员', '企业合伙人', '执行董事', '钻石', '白金', '黄金']
     for (let item of data) {
-      item.profit[0].agent = levelName[item.profit[0].agent - 1]
+      for (let key of item.profit) {
+        key.agent = levelName[key.agent - 1]
+        console.log(key)
+      }
     }
     state.profitList = data
   }

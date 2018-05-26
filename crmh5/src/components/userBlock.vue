@@ -24,7 +24,10 @@
           <i class="iconfont userfont">&#xe63a;</i>
           <span>邀请二维码</span>
         </div>
-        <div></div>
+        <div @click="goToPublicMessage">
+          <i class="iconfont userfont">&#xe602;</i>
+          <span>网盘资源</span>
+        </div>
         <div></div>
       </div>
     </div>
@@ -54,6 +57,9 @@ export default {
     },
     goToInviteCodePage () {
       this.$router.replace('/inviteCode')
+    },
+    goToPublicMessage () {
+      this.$router.replace('/publicMessage')
     }
   }
 }
