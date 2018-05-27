@@ -46,6 +46,10 @@ const actions = {
       commit('editBoss', {managerId: data.managerId, managerName: result.data.manager, index: data.index})
     }
     return result
+  },
+  async editUsers ({commit}, data) {
+    let result = await api.editUser(data)
+    return result
   }
 }
 

@@ -81,6 +81,11 @@ async function addUser (data, options = {}) {
   return result
 }
 
+async function editUser (data, options = {}) {
+  let result = await axios.put(`${config.appUrl}/user/${data.id}`, data, options)
+  return result
+}
+
 /**
  * 修改用户上级
 */
@@ -154,5 +159,6 @@ export default {
   editYunData,
   editBoss,
   getProfitData,
-  getPicToken
+  getPicToken,
+  editUser
 }

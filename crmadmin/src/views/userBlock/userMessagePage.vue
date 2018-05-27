@@ -48,6 +48,7 @@
       >
       </el-table-column>
       <el-table-column
+        min-width="140"
         prop="isManager"
         label="是否为管理员">
       </el-table-column>
@@ -56,6 +57,11 @@
         label="直接上级">
         <template slot-scope="scope">
           <el-button @click="showBoss(scope.$index)" type="text" size="mini">查看</el-button>
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="操作" min-width="80">
+        <template slot-scope="scope">
+          <el-button @click="editUsersPassword(scope.$index)" type="text" size="mini">修改密码</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -83,6 +89,16 @@
         <el-button type="primary" @click="saveBoss">保存修改</el-button>
       </div>
     </el-dialog>
+    <el-dialog title="修改密码" :visible.sync="passVisible">
+      <el-form :model="passForm" label-width="80px">
+        <el-form-item label="新密码:">
+          <el-input v-model="passForm.password"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="savePass">确定修改</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -105,19 +121,48 @@ export default {
         id: '',
         managerName: ''
       },
+      passForm: {
+        id: '',
+        password: ''
+      },
       currentPage: 1,
       bossVisible: false,
+      passVisible: false,
       selectItem: ''
     }
   },
   methods: {
-    ...mapActions(['getUserList', 'editBoss']),
+    ...mapActions(['getUserList', 'editBoss', 'editUsers']),
     formatList () {
       let levelName = ['管理员', '企业合伙人', '执行董事', '钻石', '白金', '黄金']
       for (let item of this.userList) {
         item.level = levelName[item.level - 1] || '未激活'
         item.createAt = moment(item.createAt).format('YYYY-MM-DD HH:mm')
         item.isManager = item.isManager ? '是' : '否'
+      }
+    },
+    editUsersPassword (index) {
+      this.passForm.id = this.userList[index].id
+      this.passVisible = true
+    },
+    async savePass () {
+      let result = await this.editUsers({
+        id: this.passForm.id,
+        password: this.passForm.password
+      })
+      this.passVisible = false
+      if (result.data.code === 200) {
+        return this.$message({
+          type: 'success',
+          showClose: true,
+          message: '修改成功'
+        })
+      } else {
+        return this.$message({
+          type: 'error',
+          showClose: true,
+          message: result.data.error
+        })
       }
     },
     async handleCurrentChange (val) {
