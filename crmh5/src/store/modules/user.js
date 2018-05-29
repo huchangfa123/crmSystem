@@ -28,6 +28,11 @@ const actions = {
     return result
   },
 
+  async changePass ({commit}, data) {
+    let result = await api.changePass(data)
+    return result
+  },
+
   async getAddressList ({commit}, data) {
     let result = await api.getAddressList()
     if (result.code === 200) {

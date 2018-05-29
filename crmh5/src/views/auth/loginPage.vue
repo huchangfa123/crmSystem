@@ -13,7 +13,8 @@
     <div class='bottom'>
       <span v-if="!usePassword" @click="setUsePassword">密码登录</span>
       <span v-if="usePassword" @click="setUseIdentityCode">验证码登录</span>
-      <span @click="goToRegister">注册帐号</span>
+      <a v-if="usePassword" @click="goToChangePassword">忘记密码?</a>
+      <span class='register-btn' @click="goToRegister">注册帐号</span>
     </div>
   </div>
 </template>
@@ -35,6 +36,9 @@ export default {
   },
   methods: {
     ...mapActions(['login', 'plogin']),
+    goToChangePassword () {
+      this.$router.push({path: '/changePass', query: {userPhone: this.phone}})
+    },
     Timer () {
       if (this.rTime > 0) {
         this.rTime--
@@ -149,9 +153,16 @@ export default {
         position: absolute;
         left: 20px;
       }
-      span:nth-child(2) {
+      .register-btn {
         position: absolute;
         right: 20px;
+      }
+      a {
+        margin-top: 10px;
+        color: #89bee6;
+        position: absolute;
+        left: 120px;
+        point: cursor;
       }
     }
   }

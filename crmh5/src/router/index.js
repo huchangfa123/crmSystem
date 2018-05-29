@@ -18,6 +18,7 @@ import profitPage from '../views/goodsBlock/profitPage'
 import messagePage from '../views/messagePage'
 import registerPage from '../views/auth/registerPage'
 import loginPage from '../views/auth/loginPage'
+import changePassPage from '../views/auth/changePassPage'
 import inviteCodePage from '../views/userBlock/inviteCodePage'
 import publicMessagePage from '../views/userBlock/publicMessagePage'
 
@@ -34,6 +35,11 @@ let router = new Router({
       path: '/login',
       name: 'loginPage',
       component: loginPage
+    },
+    {
+      path: '/changePass',
+      name: 'changePassPage',
+      component: changePassPage
     },
     {
       path: '/main',
@@ -175,7 +181,7 @@ let router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.name !== 'loginPage' && to.name !== 'registerPage') {
+  if (to.name !== 'loginPage' && to.name !== 'registerPage' && to.name !== 'changePassPage') {
     if (sessionStorage.getItem('actoken')) {
       if (to.matched.some((r) => r.meta.requireActive)) {
         if (sessionStorage.getItem('isActived') !== 'false') {

@@ -200,6 +200,14 @@ async function getPublicMessage (data, options = {}) {
   return result
 }
 
+/**
+ * 修改密码
+*/
+async function changePass (data, options = {}) {
+  let result = await axios.post(`${config.authUrl}/user/changePass`, data, options)
+  return result
+}
+
 export default {
   getUserData,
   getAddressList,
@@ -225,5 +233,6 @@ export default {
   otherUpgradeList,
   editUserMessage,
   activeLevelUp,
-  getPublicMessage
+  getPublicMessage,
+  changePass
 }
