@@ -178,14 +178,14 @@ export default {
       flex-direction: row;
       border-bottom: 1px solid #e3e3e3;
       .itemDes {
-        width: 60%;
-        padding: 5px 5px;
-        overflow : hidden;
-        text-overflow: ellipsis;
-        display: -webkit-box;
-        -webkit-line-clamp: 1;
-        -webkit-box-orient: vertical;
-        line-height: 22px;
+        color: #7e7373;
+        width: 55%;
+        position: relative;
+        word-wrap:break-word;         /* 英文字符换行 */
+        line-height: 20px;
+        max-height: 40px;
+        overflow: hidden;
+        margin: 0 5px;
         h3 {
           font-size: 16px;
         }
@@ -194,6 +194,17 @@ export default {
           font-size: 14px;
           color: #7e7373;
         }
+      }
+      .itemDes::after{
+        content: "...";
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        padding-left: 40px;
+        background: -webkit-linear-gradient(left, transparent, #fff 55%);
+        background: -o-linear-gradient(right, transparent, #fff 55%);
+        background: -moz-linear-gradient(right, transparent, #fff 55%);
+        background: linear-gradient(to right, transparent, #fff 55%);
       }
       .itemPrice {
         flex: 1;

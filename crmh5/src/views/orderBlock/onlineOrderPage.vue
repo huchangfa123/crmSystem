@@ -281,14 +281,33 @@ export default {
           padding-left: 10px;
           word-break: break-all;
           .goods-des {
-            width: 70%;
-            font-size: 14px;
-            text-overflow: ellipsis;
-            -webkit-line-clamp: 2;
-            display: -webkit-box;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
+            // width: 70%;
+            // font-size: 14px;
+            // text-overflow: ellipsis;
+            // -webkit-line-clamp: 2;
+            // display: -webkit-box;
+            // -webkit-box-orient: vertical;
+            // overflow: hidden;
+            // color: #7e7373;
             color: #7e7373;
+            width:70%;
+            position: relative;
+            word-wrap:break-word;         /* 英文字符换行 */
+            line-height: 20px;
+            max-height: 40px;
+            overflow: hidden;
+            margin: 0 5px;
+          }
+          .goods-des::after{
+            content: "...";
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            padding-left: 40px;
+            background: -webkit-linear-gradient(left, transparent, #fff 55%);
+            background: -o-linear-gradient(right, transparent, #fff 55%);
+            background: -moz-linear-gradient(right, transparent, #fff 55%);
+            background: linear-gradient(to right, transparent, #fff 55%);
           }
           .goods-btn {
             padding-right: 5px;
