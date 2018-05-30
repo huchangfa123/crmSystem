@@ -23,6 +23,9 @@
          <h3>{{orderTitle[item.state - 1]}}</h3>
          <p>{{item.createAt}}</p>
         </div>
+        <div class="order-message" v-if="typeof item.trackingNumber !== 'undefined'">
+          <p>快递单号: {{item.trackingNumber}}</p>
+        </div>
         <div class="order-content">
           <div class="goods-item" v-for="(good, index2) in item.goods" :key="index2">
             <div class="itemDes">
@@ -267,12 +270,20 @@ export default {
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
-        margin-top: 10px;
+        margin: 10px 0;
         margin-left: 10px;
         p {
           color:#7e7373;
           margin-right: 20px;
         }
+      }
+      .order-message {
+        display: flex;
+        padding: 10px;
+        margin: 10px 0;
+        font-size: 14px;
+        color: #7e7373;
+        word-break: break-all;
       }
       .order-content {
         display: flex;

@@ -10,9 +10,10 @@
           <i class="iconfont orderfont">&#xe621;</i>
           <span>我的下单</span>
         </div>
-        <div @click="goToOtherOrderPage">
+        <div class="myOrder" @click="goToOtherOrderPage">
           <i class="iconfont orderfont">&#xe602;</i>
           <span>我的订单</span>
+          <div class="num" v-if="this.userData.undeelOrdersNum">{{this.userData.undeelOrdersNum}}</div>
         </div>
         <div @click="goToOnlineOrderPage">
           <i class="iconfont orderfont">&#xe731;</i>
@@ -23,7 +24,11 @@
   </div>
 </template>
 <script>
+import { mapGetters } from 'vuex'
 export default {
+  computed: {
+    ...mapGetters(['userData'])
+  },
   methods: {
     goToMyOrderPage () {
       this.$router.replace('/myOrder')
@@ -74,6 +79,21 @@ export default {
           span {
             margin: 5px 0;
             font-size: 14px;
+          }
+        }
+        .myOrder {
+          position: relative;
+          .num {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 20px;
+            height: 20px;
+            line-height: 20px;
+            color: white;
+            text-align: center;
+            border-radius: 50%;
+            background-color: red;
           }
         }
       }

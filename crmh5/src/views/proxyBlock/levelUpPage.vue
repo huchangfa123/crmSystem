@@ -68,7 +68,7 @@ export default {
       }
       let levelValue = ['管理员', '企业合伙人', '执行董事', '钻石', '白金', '黄金']
       let value = levelValue.indexOf(this.defaultName) + 1
-      if (value === -1) {
+      if (value === 0) {
         return Toast({
           message: '请选择升级等级'
         })

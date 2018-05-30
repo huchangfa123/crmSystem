@@ -23,6 +23,9 @@
          <h3>{{orderTitle[item.state - 1]}}</h3>
          <p>{{item.createAt}}</p>
         </div>
+        <div class="order-address">
+          <p>收货地址: {{item.address}}</p>
+        </div>
         <div class="order-content">
           <div class="goods-item" v-for="(good, index2) in item.goods" :key="index2">
             <div class="itemDes">
@@ -324,6 +327,14 @@ export default {
           color:#7e7373;
           margin-right: 20px;
         }
+      }
+      .order-address {
+        display: flex;
+        padding: 10px;
+        margin: 10px 0;
+        font-size: 14px;
+        color: #7e7373;
+        word-break: break-all;
       }
       .order-content {
         display: flex;
