@@ -290,13 +290,13 @@ export default {
             // overflow: hidden;
             // color: #7e7373;
             color: #7e7373;
-            width:70%;
+            width:65%;
             position: relative;
             word-wrap:break-word;         /* 英文字符换行 */
             line-height: 20px;
             max-height: 40px;
             overflow: hidden;
-            margin: 0 5px;
+            padding: 0 5px;
           }
           .goods-des::after{
             content: "...";
@@ -304,10 +304,11 @@ export default {
             bottom: 0;
             right: 0;
             padding-left: 40px;
-            background: -webkit-linear-gradient(left, transparent, #fff 55%);
-            background: -o-linear-gradient(right, transparent, #fff 55%);
-            background: -moz-linear-gradient(right, transparent, #fff 55%);
-            background: linear-gradient(to right, transparent, #fff 55%);
+            padding-right: 10px;
+            background: -webkit-linear-gradient(left, transparent,#faf8f8 55%);
+            background: -o-linear-gradient(right, transparent, #faf8f8 55%);
+            background: -moz-linear-gradient(right, transparent, #faf8f8 55%);
+            background: linear-gradient(to right, transparent, #faf8f8 55%);
           }
           .goods-btn {
             padding-right: 5px;

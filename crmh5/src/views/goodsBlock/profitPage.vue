@@ -134,10 +134,10 @@ export default {
             bottom: 0;
             right: 0;
             padding-left: 40px;
-            background: -webkit-linear-gradient(left, transparent, #fff 55%);
-            background: -o-linear-gradient(right, transparent, #fff 55%);
-            background: -moz-linear-gradient(right, transparent, #fff 55%);
-            background: linear-gradient(to right, transparent, #fff 55%);
+            background: -webkit-linear-gradient(left, transparent, #faf8f8 55%);
+            background: -o-linear-gradient(right, transparent, #faf8f8 55%);
+            background: -moz-linear-gradient(right, transparent, #faf8f8 55%);
+            background: linear-gradient(to right, transparent, #faf8f8 55%);
           }
           span {
             font-size: 14px;
