@@ -172,10 +172,10 @@ export default {
       this.isOver = false
       let conditions = {}
       if (this.pickerValue1) {
-        conditions.beginDate = this.pickerValue1
+        conditions.beginDate = moment(this.pickerValue1).format('YYYY-MM-DD HH:mm:ss')
       }
       if (this.pickerValue2) {
-        conditions.endDate = this.pickerValue2
+        conditions.endDate = moment(this.pickerValue2).format('YYYY-MM-DD HH:mm:ss')
       }
       conditions.state = this.slots[0].values.indexOf(this.orderState) + 1
       await this.getMyBuyOrder({
