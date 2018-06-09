@@ -24,6 +24,8 @@
          <p>{{item.createAt}}</p>
         </div>
         <div class="order-address">
+          <p>收货人: {{item.receivePeople}}</p>
+          <p>手机号: {{item.receivePhone}}</p>
           <p>收货地址: {{item.address}}</p>
         </div>
         <div class="order-content">
@@ -330,11 +332,15 @@ export default {
       }
       .order-address {
         display: flex;
+        flex-direction: column;
         padding: 10px;
         margin: 10px 0;
         font-size: 14px;
         color: #7e7373;
         word-break: break-all;
+        p {
+          margin: 2px 0;
+        }
       }
       .order-content {
         display: flex;
