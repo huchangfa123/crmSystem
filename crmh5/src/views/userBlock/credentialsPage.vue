@@ -9,9 +9,9 @@
       <span class="realName">{{userData.realName}}</span>
       <span class="phoneNumber">{{userData.phoneNumber}}</span>
       <span class="agent">{{userData.agent}}</span>
-      <span class="fromYear">{{new Date(userData.createAt).getFullYear()}}</span>
-      <span class="fromMonth">{{new Date(userData.createAt).getMonth() + 1}}</span>
-      <span class="fromDay">{{new Date(userData.createAt).getDate()}}</span>
+      <span class="fromYear">{{new Date(userData.updateAt).getFullYear()}}</span>
+      <span class="fromMonth">{{new Date(userData.updateAt).getMonth() + 1}}</span>
+      <span class="fromDay">{{new Date(userData.updateAt).getDate()}}</span>
       <span class="toYear">{{new Date(userData.expiredAt).getFullYear()}}</span>
       <span class="toMonth">{{new Date(userData.expiredAt).getMonth() + 1}}</span>
       <span class="toDay">{{new Date(userData.expiredAt).getDate()}}</span>
