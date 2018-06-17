@@ -21,7 +21,7 @@
       <div class="order-item" v-for="(item, index1) in myOrderList" :key="index1" >
         <div class="order-header">
          <h3>{{orderTitle[item.state - 1]}}</h3>
-         <p>{{item.createAt}}</p>
+         <p>{{item.updateAt}}</p>
         </div>
         <div class="order-address">
           <p>收货人: {{item.receivePeople}}</p>
@@ -133,7 +133,7 @@ export default {
     format () {
       if (this.myOrderList.length === 0) return
       for (let item of this.myOrderList) {
-        item.createAt = moment(item.createAt).format('MM-DD HH:mm')
+        item.updateAt = moment(item.updateAt).format('MM-DD HH:mm')
       }
     },
     handleConfirm1 () {

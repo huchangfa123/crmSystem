@@ -11,7 +11,7 @@
       <span class="agent">{{userData.agent}}</span>
       <span class="fromYear">{{new Date(userData.updateAt).getFullYear()}}</span>
       <span class="fromMonth">{{new Date(userData.updateAt).getMonth() + 1}}</span>
-      <span class="fromDay">{{new Date(userData.updateAt).getDate()}}</span>
+      <span class="fromDay">{{new Date(userData.updateAt ).getDate()}}</span>
       <span class="toYear">{{new Date(userData.expiredAt).getFullYear()}}</span>
       <span class="toMonth">{{new Date(userData.expiredAt).getMonth() + 1}}</span>
       <span class="toDay">{{new Date(userData.expiredAt).getDate()}}</span>

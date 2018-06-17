@@ -27,7 +27,7 @@
         </div>
         <div class="itemPrice">
           <p>x{{item.num}}</p>
-          <p>￥{{item.num * item.price}}</p>
+          <p>￥{{(item.num * item.price).toFixed(2)}}</p>
         </div>
       </div>
     </div>
@@ -43,7 +43,7 @@
         <div v-if="curOrderData.count > 0" class="bottom-count">{{curOrderData.count}}</div>
       </div>
       <div class="bottom-content">
-        <h3 v-if="curOrderData.totalPrice!==0">￥{{curOrderData.totalPrice}}</h3>
+        <h3 v-if="curOrderData.totalPrice!==0">￥{{curOrderData.totalPrice.toFixed(2)}}</h3>
       </div>
       <div @click="ensureOrder" class="bottom-btn">
         订单确定

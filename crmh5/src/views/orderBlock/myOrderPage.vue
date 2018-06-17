@@ -21,7 +21,7 @@
       <div class="order-item" v-for="(item, index1) in myBuyList" :key="index1" >
         <div class="order-header">
          <h3>{{orderTitle[item.state - 1]}}</h3>
-         <p>{{item.createAt}}</p>
+         <p>{{item.updateAt}}</p>
         </div>
         <div class="order-message" v-if="typeof item.trackingNumber !== 'undefined'">
           <p>快递单号: {{item.trackingNumber}}</p>
@@ -128,7 +128,7 @@ export default {
     },
     format () {
       for (let item of this.myBuyList) {
-        item.createAt = moment(item.createAt).format('MM-DD HH:mm')
+        item.updateAt = moment(item.updateAt).format('MM-DD HH:mm')
       }
     },
     handleConfirm1 () {

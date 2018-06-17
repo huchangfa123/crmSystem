@@ -30,6 +30,7 @@ const mutations = {
       item.toUserLevel = levelName[item.toUserLevel - 1]
       item.state = stateName[item.state - 1]
       item.createAt = moment(item.createAt).format('MM-DD HH:mm')
+      item.updateAt = moment(item.updateAt).format('MM-DD HH:mm')
     }
     state.orderList = data.data
     state.orderCount = data.count

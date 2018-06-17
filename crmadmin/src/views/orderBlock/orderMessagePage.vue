@@ -38,7 +38,7 @@
       <el-table-column
         prop="toUserName"
         label="接单者"
-        min-width="140px"
+        min-width="120px"
       >
       </el-table-column>
       <el-table-column
@@ -57,6 +57,11 @@
         min-width="120px"
         prop="createAt"
         label="创建时间">
+      </el-table-column>
+      <el-table-column
+        min-width="120px"
+        prop="updateAt"
+        label="状态更新时间">
       </el-table-column>
       <el-table-column align="center" label="收款截图">
         <template slot-scope="scope">
